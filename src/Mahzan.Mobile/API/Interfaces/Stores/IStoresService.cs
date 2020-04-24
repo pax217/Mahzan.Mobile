@@ -1,4 +1,5 @@
 ﻿using Mahzan.Mobile.API.Filters.Stores;
+using Mahzan.Mobile.API.Requests.Stores;
 using Mahzan.Mobile.API.Results.Stores;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,8 @@ namespace Mahzan.Mobile.API.Interfaces.Stores
     public interface IStoresService
     {
         Task<GetStoresResult> Get(GetStoresFilter filter);
+        Task<AddStoresResult> Add(AddStoresRequest request);
+        Task<PutStoresResult> Update(PutStoresRequest request);
+        Task<DeleteStoresResult> Delete(Guid storesId);
     }
 }

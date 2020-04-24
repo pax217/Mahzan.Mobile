@@ -2,6 +2,7 @@
 using Mahzan.Mobile.API.Filters.Companies;
 using Mahzan.Mobile.API.Implementations._Base;
 using Mahzan.Mobile.API.Interfaces.Companies;
+using Mahzan.Mobile.API.Requests.Companies;
 using Mahzan.Mobile.API.Results.Companies;
 using Mahzan.Mobile.SqLite.Interfaces;
 using Newtonsoft.Json;
@@ -22,6 +23,34 @@ namespace Mahzan.Mobile.API.Implementations.Companies
             : base(aspNetUsersRepository)
         {
 
+        }
+
+        public async Task<AddCompaniesResult> Add(PostCompaniesRequest request)
+        {
+            AddCompaniesResult result = new AddCompaniesResult();
+            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Companies");
+            try
+            {
+                HttpClient httpClient = new HttpClient();
+
+                string jsonData = JsonConvert.SerializeObject(request);
+                StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+
+                HttpResponseMessage httpResponseMessage = await httpClient.PostAsync(uriBuilder.ToString(), stringContent);
+
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<AddCompaniesResult>(respuesta);
+            }
+            catch (Exception ex)
+            {
+                result.IsValid = false;
+                result.ResultTypeEnum = ResultTypeEnum.ERROR;
+                result.Message = ex.Message;
+            }
+            return result;
         }
 
         public async Task<GetCompaniesResult> Get(GetCompaniesFilter filter)

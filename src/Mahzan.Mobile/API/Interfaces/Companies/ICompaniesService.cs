@@ -1,4 +1,5 @@
 ﻿using Mahzan.Mobile.API.Filters.Companies;
+using Mahzan.Mobile.API.Requests.Companies;
 using Mahzan.Mobile.API.Results.Companies;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,7 @@ namespace Mahzan.Mobile.API.Interfaces.Companies
     public interface ICompaniesService
     {
         Task<GetCompaniesResult> Get(GetCompaniesFilter filter);
+
+        Task<AddCompaniesResult> Add(PostCompaniesRequest request);
     }
 }

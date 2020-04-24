@@ -30,7 +30,7 @@
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
                            Margin="20,150,20,20">
-                        <Grid RowSpacing="11">
+                        <Grid RowSpacing="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -49,19 +49,24 @@
                                     Title="- Empresas -" 
                                     ItemsSource="{Binding Companies}" 
                                     ItemDisplayBinding="{Binding BusinessName}"
-                                    SelectedItem="{Binding SelectedCompanies}"/>
+                                    SelectedItem="{Binding SelectedCompanies, Mode=TwoWay}"/>
                             <Entry Grid.Row="2"
-                                   Placeholder="Código">
+                                   Placeholder="Código"
+                                   Text="{Binding Code, Mode=TwoWay}">
                             </Entry>
                             <Entry Grid.Row="3"
-                                   Placeholder="Nombre">
+                                   Placeholder="Nombre"
+                                   Text="{Binding Name, Mode=TwoWay}">
                             </Entry>
                             <Entry Grid.Row="4"
                                    Placeholder="Teléfono"
-                                   Keyboard="Numeric">
+                                   Keyboard="Numeric"
+                                   Text="{Binding Phone, Mode=TwoWay}">
                             </Entry>
                             <Entry Grid.Row="5"
-                                   Placeholder="Comentario">
+                                   Placeholder="Comentario"
+                                   Text="{Binding Comment, Mode=TwoWay}"
+                                   WidthRequest="30">
                             </Entry>
                         </Grid>
                     </Frame>
