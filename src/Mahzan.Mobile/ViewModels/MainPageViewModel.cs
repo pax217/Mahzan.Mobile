@@ -2,6 +2,8 @@
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.SqLite.Interfaces;
 using Mahzan.Mobile.Views;
+using Mahzan.Mobile.Views.Members.Products;
+using Mahzan.Mobile.Views.Members.Sales;
 using Mahzan.Mobile.Views.Members.WorkEnviroment;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -73,15 +75,22 @@ namespace Mahzan.Mobile.ViewModels
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewa",
-                PageName = nameof(ViewA),
+                PageName = nameof(IndexSalesPage),
                 Title = "Ventas"
             });
 
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
-                PageName = nameof(ViewB),
+                PageName = nameof(IndexProductsPage),
                 Title = "Productos"
+            });
+
+            result.Add(new MyMenuItem()
+            {
+                Icon = "ic_viewb",
+                PageName = nameof(ViewB),
+                Title = "Tickets"
             });
 
             result.Add(new MyMenuItem()

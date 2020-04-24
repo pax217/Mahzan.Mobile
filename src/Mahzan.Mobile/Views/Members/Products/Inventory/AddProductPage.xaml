@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" xmlns:helper="clr-namespace:Mahzan.Mobile.Helpers.MaskBehaivior"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Products.Inventory.AddProductPage"
+             Title="Producto">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemBarCode"
+                     IconImageSource="icon_barcode.png"
+                     Command="{Binding OpenBarCodeCommand}">
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItemAddProduct"
+                     IconImageSource="icon_camera.png"
+                     Command="{Binding OpenCameraCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="add_product_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Text="Detalle de Producto"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Image Grid.Row="1"
+                                   Source="{Binding ProductImageSource}"
+                                   Aspect="AspectFill"
+                                   HorizontalOptions="FillAndExpand"
+                                   VerticalOptions="StartAndExpand"
+                                   HeightRequest="300"
+                                   WidthRequest="150">
+                            </Image>
+                            <Entry Grid.Row="2"
+                                   Placeholder="SKU"
+                                   Text="{Binding SKU}">
+                            </Entry>
+
+                            <Entry Grid.Row="3"
+                                   Placeholder="Código de Barras"
+                                   Text="{Binding BarCode}">
+
+                            </Entry>
+                            <Entry Grid.Row="5"
+                                   Placeholder="Descripción"
+                                   Text="{Binding Description}">
+                            </Entry>
+
+                            <Picker Grid.Row="6" 
+                                    Title="- Categorías -" 
+                                    ItemsSource="{Binding ProductCategories}" 
+                                    ItemDisplayBinding="{Binding Description}"
+                                    SelectedItem="{Binding SelectedProductCategory}"/>
+
+
+                            <Picker Grid.Row="7" 
+                                    Title="- Unidades -" 
+                                    ItemsSource="{Binding ProductUnits}" 
+                                    ItemDisplayBinding="{Binding Description}"
+                                    SelectedItem="{Binding SelectedProductUnit}"/>
+
+                            <Entry Grid.Row="8"  
+                                   Keyboard="Numeric"
+                                   Placeholder="Precio"
+                                   Text="{Binding Price}">
+                                <Entry.Behaviors>
+                                    <helper:MaskBehaviorEntry MaxLength="10" 
+                                                              MaskType="Decimal"
+                                                              />
+                                </Entry.Behaviors>
+                            </Entry>
+
+                            <Entry  Grid.Row="9" 
+                                    Keyboard="Numeric"
+                                    Placeholder="Costo"
+                                    MaxLength="10"
+                                    Text="{Binding Cost}">
+                                <Entry.Behaviors>
+                                    <helper:MaskBehaviorEntry MaxLength="10" 
+                                                              MaskType="Decimal"
+                                                              />
+                                </Entry.Behaviors>
+                            </Entry>
+
+                            <Button x:Name="buttonEnviar"
+                                    Grid.Row="10"
+                                    Text="Agregar"
+                                    BackgroundColor="#146AB0"
+                                    CornerRadius="3"
+                                    TextColor="White"
+                                    Command="{Binding CreateProductCommand}">
+                            </Button>
+
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

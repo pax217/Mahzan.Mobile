@@ -21,6 +21,18 @@ using Mahzan.Mobile.API.Interfaces.Stores;
 using Mahzan.Mobile.API.Implementations.Stores;
 using Mahzan.Mobile.API.Interfaces.Companies;
 using Mahzan.Mobile.API.Implementations.Companies;
+using Mahzan.Mobile.Views.Members.Products;
+using Mahzan.Mobile.ViewModels.Members.Products;
+using Mahzan.Mobile.Views.Members.Sales;
+using Mahzan.Mobile.ViewModels.Members.Sales;
+using Mahzan.Mobile.Views.Members.Products.Inventory;
+using Mahzan.Mobile.ViewModels.Members.Products.Inventory;
+using Mahzan.Mobile.API.Implementations.Products;
+using Mahzan.Mobile.API.Interfaces.Products;
+using Mahzan.Mobile.API.Implementations.ProductCategories;
+using Mahzan.Mobile.API.Interfaces.ProductCategories;
+using Mahzan.Mobile.API.Implementations.ProductUnits;
+using Mahzan.Mobile.API.Interfaces.ProductUnits;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -50,6 +62,10 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IAspNetUsersService, AspNetUsersService>();
             containerRegistry.Register<IStoresService, StoresService>();
             containerRegistry.Register<ICompaniesService, CompaniesService>();
+            containerRegistry.Register<IProductsService, ProductsService>();
+            containerRegistry.Register<IProductCategoriesService, ProductCategoriesService>();
+            containerRegistry.Register<IProductUnitsService, ProductUnitsService>();
+
 
             //Repository
             containerRegistry.Register<IRepository<AspNetUsers>, Repository<AspNetUsers>>();
@@ -64,6 +80,11 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<IndexWorkEnviromentPage, IndexWorkEnviromentPageViewModel>();
             containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
+            containerRegistry.RegisterForNavigation<IndexProductsPage, IndexProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<IndexSalesPage, IndexSalesPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
+            containerRegistry.RegisterForNavigation<AddProductInventoryPage, AddProductInventoryPageViewModel>();
         }
     }
 }

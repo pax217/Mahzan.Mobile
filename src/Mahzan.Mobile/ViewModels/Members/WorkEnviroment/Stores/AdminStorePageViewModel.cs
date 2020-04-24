@@ -242,6 +242,5 @@ namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment.Stores
             }
 
         }
-
     }
 }
