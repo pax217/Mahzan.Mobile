@@ -236,8 +236,11 @@ namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment.Stores
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
             StoresId = parameters.GetValue<Guid>("storesId");
+            if (StoresId!=Guid.Empty)
+            {
+                await GetCompany(StoresId.Value);
+            }
 
-            await GetCompany(StoresId.Value);
         }
 
     }

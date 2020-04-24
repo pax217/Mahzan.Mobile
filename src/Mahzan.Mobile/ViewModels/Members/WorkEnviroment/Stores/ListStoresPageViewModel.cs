@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment.Stores
 {
-    public class ListStoresPageViewModel : ViewModelBase
+    public class ListStoresPageViewModel : BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
 
@@ -62,7 +62,6 @@ namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment.Stores
         public ListStoresPageViewModel(
             INavigationService navigationService,
             IStoresService storesService)
-            :base(navigationService)
         {
 
             _navigationService = navigationService;
@@ -95,6 +94,16 @@ namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment.Stores
                                     result.Message,
                                     "ok");
             }
+        }
+
+        public async void OnNavigatedFrom(INavigationParameters parameters)
+        {
+
+        }
+
+        public async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            await GetStores();
         }
     }
 }
