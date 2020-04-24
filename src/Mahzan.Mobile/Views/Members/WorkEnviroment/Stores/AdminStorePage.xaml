@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.WorkEnviroment.Stores.AdminStorePage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Eliminar"
+                     Command="{Binding DeleteStoreCommand}">
+        </ToolbarItem>
+        <ToolbarItem Text="Guardar"
+                     Command="{Binding SaveStoreCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="store_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Tienda"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Picker Grid.Row="1" 
+                                    Title="- Empresas -" 
+                                    ItemsSource="{Binding Companies}" 
+                                    ItemDisplayBinding="{Binding BusinessName}"
+                                    SelectedItem="{Binding SelectedCompanies}"/>
+                            <Entry Grid.Row="2"
+                                   Placeholder="Código">
+                            </Entry>
+                            <Entry Grid.Row="3"
+                                   Placeholder="Nombre">
+                            </Entry>
+                            <Entry Grid.Row="4"
+                                   Placeholder="Teléfono"
+                                   Keyboard="Numeric">
+                            </Entry>
+                            <Entry Grid.Row="5"
+                                   Placeholder="Comentario">
+                            </Entry>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
