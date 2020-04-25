@@ -96,7 +96,7 @@ namespace Mahzan.Mobile.API.Implementations.Stores
             {
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
 
-                if (filter.StoresId!=null)
+                if (filter.StoresId!=null && filter.StoresId!= Guid.Empty)
                 {
                     query["StoresId"] = filter.StoresId.ToString();
                 }

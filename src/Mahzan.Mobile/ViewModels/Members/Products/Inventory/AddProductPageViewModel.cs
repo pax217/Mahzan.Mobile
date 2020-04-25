@@ -1,5 +1,6 @@
 ﻿using Mahzan.Mobile.API.Entities;
 using Mahzan.Mobile.API.Filters.ProductCategories;
+using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Filters.ProductUnits;
 using Mahzan.Mobile.API.Interfaces.ProductCategories;
 using Mahzan.Mobile.API.Interfaces.Products;
@@ -27,7 +28,7 @@ using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 {
-    public class AddProductPageViewModel :ViewModelBase
+    public class AddProductPageViewModel : BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
 
@@ -38,6 +39,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         private readonly IProductsService _productsService;
 
         #region Properties
+
+        private Guid? ProductsId { get; set; }
+
         //Image
         private ImageSource _productImageSource;
         public ImageSource ProductImageSource
@@ -53,17 +57,41 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             get => _barCode;
             set => SetProperty(ref _barCode, value);
         }
+
         //SKU
-        public string SKU { get; set; }
+        private string _sku;
+        public string SKU
+        {
+            get => _sku;
+            set => SetProperty(ref _sku, value);
+        }
+
 
         //Description
-        public string Description { get; set; }
+
+        private string _description;
+        public string Description
+        {
+            get => _description;
+            set => SetProperty(ref _description, value);
+        }
 
         //Price
-        public decimal Price { get; set; }
+        private decimal _price;
+        public decimal Price
+        {
+            get => _price;
+            set => SetProperty(ref _price, value);
+        }
 
         //Cost
-        public decimal Cost { get; set; }
+
+        private decimal? _cost;
+        public decimal? Cost
+        {
+            get => _cost;
+            set => SetProperty(ref _cost, value);
+        }
 
         //Pickers
         private ObservableCollection<ProductCategories> _productCategories;
@@ -137,7 +165,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
             IProductsService productsService)
-            :base(navigationService)
         {
             _navigationService = navigationService;
 
@@ -182,32 +209,40 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                 }
             };
 
-            PostProductsResult postProductsResult;
-            postProductsResult = await _productsService
-                                       .Post(postProductsRequest);
-
-            if (postProductsResult.IsValid)
+            if (ProductsId == Guid.Empty)
             {
-                //SqLite.Entities.Products product = new SqLite.Entities.Products
-                //{
-                //    ProductsId = postProductsResult.Product.ProductsId,
-                //    Description = postProductsResult.Product.Description
-                //};
+                //Insert
+                PostProductsResult postProductsResult;
+                postProductsResult = await _productsService
+                                           .Post(postProductsRequest);
 
-                //_productsSqlite.Insert(product);
+                if (postProductsResult.IsValid)
+                {
 
-                //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new AddProductInventoryPage()));
+                    var navigationParams = new NavigationParameters();
+                    navigationParams.Add("productsId", postProductsResult.Product.ProductsId);
 
+                    await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
+                }
+                else
+                {
+                    await Application
+                    .Current
+                    .MainPage
+                    .DisplayAlert(postProductsResult.Title,
+                                  postProductsResult.Message,
+                                  "ok");
+                }
             }
-            else
+            else 
             {
-                await Application
-                .Current
-                .MainPage
-                .DisplayAlert(postProductsResult.Title,
-                              postProductsResult.Message,
-                              "ok");
+                var navigationParams = new NavigationParameters();
+                navigationParams.Add("productsId", ProductsId.Value);
+
+                await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
             }
+
+
 
 
         }
@@ -322,6 +357,49 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         private void HandleSelectedProductCategory()
         {
             Debug.WriteLine(_selectedProductCategory.ProductCategoriesId);
+        }
+
+        public async void OnNavigatedFrom(INavigationParameters parameters)
+        {
+
+        }
+
+        public async void OnNavigatedTo(INavigationParameters parameters)
+        {
+            ProductsId = parameters.GetValue<Guid>("productsId");
+
+            if (ProductsId !=Guid.Empty)
+            {
+                await GetProduct(ProductsId.Value);
+            }
+        }
+
+        public async Task GetProduct(Guid productsId) 
+        {
+            GetProductsResult result = await _productsService
+                                             .Get(new GetProductsFilter
+                                            {
+                                               ProductsId = productsId
+                                             });
+
+            if (result.IsValid)
+            {
+                API.Entities.Products product = result.Products.FirstOrDefault();
+
+                var bytes = Convert.FromBase64String(product.ProductsPhotos.Base64);
+                ProductImageSource = ImageSource.FromStream(() => new MemoryStream(bytes));
+
+                SKU = product.SKU;
+                BarCode = product.Barcode;
+                Description = product.Description;
+                SelectedProductCategory = ProductCategories
+                                          .SingleOrDefault(x => x.ProductCategoriesId == product.ProductCategoriesId);
+                SelectedProductUnit = ProductUnits
+                                      .SingleOrDefault(x => x.ProductUnitsId == product.ProductUnitsId);
+
+                Price = product.Price;
+                Cost = product.Cost;
+            }
         }
 
         #endregion

@@ -33,6 +33,8 @@ using Mahzan.Mobile.API.Implementations.ProductCategories;
 using Mahzan.Mobile.API.Interfaces.ProductCategories;
 using Mahzan.Mobile.API.Implementations.ProductUnits;
 using Mahzan.Mobile.API.Interfaces.ProductUnits;
+using Mahzan.Mobile.API.Implementations.ProductsStore;
+using Mahzan.Mobile.API.Interfaces.ProductsStore;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -65,7 +67,8 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IProductsService, ProductsService>();
             containerRegistry.Register<IProductCategoriesService, ProductCategoriesService>();
             containerRegistry.Register<IProductUnitsService, ProductUnitsService>();
-
+            containerRegistry.Register<IStoresService, StoresService>();
+            containerRegistry.Register<IProductsStoreService, ProductsStoreService>();
 
             //Repository
             containerRegistry.Register<IRepository<AspNetUsers>, Repository<AspNetUsers>>();

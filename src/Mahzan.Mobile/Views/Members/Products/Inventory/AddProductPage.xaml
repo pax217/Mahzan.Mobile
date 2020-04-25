@@ -47,7 +47,7 @@
                                    FontSize="18">
                             </Label>
                             <Image Grid.Row="1"
-                                   Source="{Binding ProductImageSource}"
+                                   Source="{Binding ProductImageSource, Mode=TwoWay}"
                                    Aspect="AspectFill"
                                    HorizontalOptions="FillAndExpand"
                                    VerticalOptions="StartAndExpand"
@@ -56,36 +56,36 @@
                             </Image>
                             <Entry Grid.Row="2"
                                    Placeholder="SKU"
-                                   Text="{Binding SKU}">
+                                   Text="{Binding SKU, Mode=TwoWay}">
                             </Entry>
 
                             <Entry Grid.Row="3"
                                    Placeholder="Código de Barras"
-                                   Text="{Binding BarCode}">
+                                   Text="{Binding BarCode, Mode=TwoWay}">
 
                             </Entry>
                             <Entry Grid.Row="5"
                                    Placeholder="Descripción"
-                                   Text="{Binding Description}">
+                                   Text="{Binding Description, Mode=TwoWay}">
                             </Entry>
 
                             <Picker Grid.Row="6" 
                                     Title="- Categorías -" 
-                                    ItemsSource="{Binding ProductCategories}" 
-                                    ItemDisplayBinding="{Binding Description}"
-                                    SelectedItem="{Binding SelectedProductCategory}"/>
+                                    ItemsSource="{Binding ProductCategories, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedProductCategory , Mode=TwoWay}"/>
 
 
                             <Picker Grid.Row="7" 
                                     Title="- Unidades -" 
-                                    ItemsSource="{Binding ProductUnits}" 
-                                    ItemDisplayBinding="{Binding Description}"
-                                    SelectedItem="{Binding SelectedProductUnit}"/>
+                                    ItemsSource="{Binding ProductUnits, Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/>
 
                             <Entry Grid.Row="8"  
                                    Keyboard="Numeric"
                                    Placeholder="Precio"
-                                   Text="{Binding Price}">
+                                   Text="{Binding Price, Mode=TwoWay}">
                                 <Entry.Behaviors>
                                     <helper:MaskBehaviorEntry MaxLength="10" 
                                                               MaskType="Decimal"
@@ -97,7 +97,7 @@
                                     Keyboard="Numeric"
                                     Placeholder="Costo"
                                     MaxLength="10"
-                                    Text="{Binding Cost}">
+                                    Text="{Binding Cost, Mode=TwoWay}">
                                 <Entry.Behaviors>
                                     <helper:MaskBehaviorEntry MaxLength="10" 
                                                               MaskType="Decimal"

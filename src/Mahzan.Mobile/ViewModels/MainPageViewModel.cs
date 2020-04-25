@@ -23,7 +23,6 @@ namespace Mahzan.Mobile.ViewModels
         private INavigationService _navigationService;
 
         private readonly IRepository<AspNetUsers> _aspNetUsersRepository;
-
         public ObservableCollection<MyMenuItem> MenuItems { get; set; }
 
         private MyMenuItem selectedMenuItem;
@@ -34,6 +33,28 @@ namespace Mahzan.Mobile.ViewModels
         }
 
         public DelegateCommand NavigateCommand { get; private set; }
+
+        private string _role { get; set; }
+        public string Role
+        {
+            get => _role;
+            set
+            {
+                _role = value;
+                OnPropertyChanged(nameof(Role));
+            }
+        }
+
+        private string _userName { get; set; }
+        public string UserName
+        {
+            get => _userName;
+            set
+            {
+                _userName = value;
+                OnPropertyChanged(nameof(UserName));
+            }
+        }
 
         public MainPageViewModel(
             INavigationService navigationService,
@@ -49,6 +70,7 @@ namespace Mahzan.Mobile.ViewModels
 
             Task.Run(() => BuildMenu());
 
+
             NavigateCommand = new DelegateCommand(Navigate);
         }
 
@@ -57,6 +79,9 @@ namespace Mahzan.Mobile.ViewModels
             MenuItems = new ObservableCollection<MyMenuItem>();
 
             List<AspNetUsers> aspNetUsers = await _aspNetUsersRepository.Get();
+
+            Role = aspNetUsers.FirstOrDefault().Role;
+            UserName = aspNetUsers.FirstOrDefault().UserName;
 
             switch (aspNetUsers.FirstOrDefault().Role)
             {
@@ -67,6 +92,7 @@ namespace Mahzan.Mobile.ViewModels
                     break;
             }
         }
+
 
         private ObservableCollection<MyMenuItem> BuildMenuMember()
         {
@@ -110,7 +136,7 @@ namespace Mahzan.Mobile.ViewModels
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
-                PageName = nameof(ViewB),
+                PageName = nameof(LoginPage),
                 Title = "Salir"
             });
 

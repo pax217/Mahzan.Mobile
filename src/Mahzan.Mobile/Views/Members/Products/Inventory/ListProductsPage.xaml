@@ -33,12 +33,10 @@
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
                            Margin="20,150,20,20">
-                        <Grid RowSpacing="11">
+                        <Grid RowSpacing="15">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-
+                                <RowDefinition Height="500"></RowDefinition>
                             </Grid.RowDefinitions>
 
                             <Label Grid.Row="0"
@@ -47,30 +45,26 @@
                                    FontSize="14">
                             </Label>
                             <ListView Grid.Row="1"
-                                      ItemsSource="{Binding ListViewProducts}"
-                                      CachingStrategy="RecycleElement"
-                                      HasUnevenRows="True"
-                                      SelectedItem="{Binding SelectedParameter}">
+                                      ItemsSource="{Binding ListViewProducts, Mode=TwoWay}"
+                                      SelectedItem="{Binding SelectedProduct, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <ViewCell>
                                             <StackLayout BackgroundColor="#eee"
                                                          Orientation="Vertical">
-                                                <Grid>
+                                                <Grid RowSpacing="15">
                                                     <Grid.RowDefinitions>
-                                                        <RowDefinition Height="50"/>
+                                                        <RowDefinition Height="*"/>
                                                     </Grid.RowDefinitions>
                                                     <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="70"></ColumnDefinition>
+                                                        <ColumnDefinition Width="180"></ColumnDefinition>
                                                         <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                                        <ColumnDefinition Width="50"></ColumnDefinition>
                                                     </Grid.ColumnDefinitions>
                                                     <Image Grid.Row="0"
                                                            Grid.Column="0"
-                                                           Source="{Binding ImageSource}"
-                                                           WidthRequest="40" 
-                                                           HeightRequest="40"/>
+                                                           Source="{Binding ImageSource}"/>
                                                     <Label Grid.Row="0"
                                                            Grid.Column="1"
                                                            Text="{Binding Description}"
@@ -93,10 +87,6 @@
                                                            FontSize="18"
                                                            FontAttributes="Bold"/>
                                                 </Grid>
-
-
-
-
                                             </StackLayout>
                                         </ViewCell>
                                     </DataTemplate>

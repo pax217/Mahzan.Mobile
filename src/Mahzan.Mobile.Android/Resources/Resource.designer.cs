@@ -9244,17 +9244,20 @@ namespace Mahzan.Mobile.Droid
 			// aapt resource value: 0x7F07014B
 			public const int stores_background = 2131165515;
 			
+			// aapt resource value: 0x7F07014C
+			public const int stores_inventory_background = 2131165516;
+			
 			// aapt resource value: 0x7F07014A
 			public const int store_background = 2131165514;
 			
-			// aapt resource value: 0x7F07014C
-			public const int tooltip_frame_dark = 2131165516;
-			
 			// aapt resource value: 0x7F07014D
-			public const int tooltip_frame_light = 2131165517;
+			public const int tooltip_frame_dark = 2131165517;
 			
 			// aapt resource value: 0x7F07014E
-			public const int work_enviroment_background = 2131165518;
+			public const int tooltip_frame_light = 2131165518;
+			
+			// aapt resource value: 0x7F07014F
+			public const int work_enviroment_background = 2131165519;
 			
 			static Drawable()
 			{

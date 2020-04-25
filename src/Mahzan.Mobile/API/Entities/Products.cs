@@ -22,5 +22,8 @@ namespace Mahzan.Mobile.API.Entities
 
         public bool AvailableInAllStores { get; set; }
         public ProductsPhotos ProductsPhotos { get; set; }
+
+        public Guid ProductCategoriesId { get; set; }
+        public Guid ProductUnitsId { get; set; }
     }
 }

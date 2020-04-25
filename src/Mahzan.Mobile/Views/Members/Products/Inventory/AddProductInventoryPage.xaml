@@ -1,8 +1,298 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com"
+             xmlns:prism="http://prismlibrary.com" xmlns:helper="clr-namespace:Mahzan.Mobile.Helpers.MaskBehaivior"
              prism:ViewModelLocator.AutowireViewModel="True"
-             x:Class="Mahzan.Mobile.Views.Members.Products.Inventory.AddProductInventoryPage">
-  
+             x:Class="Mahzan.Mobile.Views.Members.Products.Inventory.AddProductInventoryPage"
+             Title="Producto en Tiendas">
+    <ContentPage.ToolbarItems>
+
+        <ToolbarItem x:Name="toolbarItemTicketDelete"
+                     IconImageSource="icon_delete.png"
+                     Command="{Binding ButtonEraseCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="stores_inventory_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame Grid.Row="0" 
+                           CornerRadius="30" 
+                           BackgroundColor="White" 
+                           Margin="20,150,20,0">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Inventario de Producto"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Grid Grid.Row="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="En Todas las Tiendas">
+                                </Label>
+                                <Switch Grid.Column="1"
+                                    IsToggled="false"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand"
+                                    />
+                            </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="Inventario">
+                                </Label>
+                                <Switch Grid.Column="1"
+                                    IsToggled="false"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand"
+                                    />
+                            </Grid>
+                            <Grid Grid.Row="3">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Grid.Column="0"
+                                       Text="Mismo Precio">
+                                </Label>
+                                <Switch Grid.Column="1"
+                                    IsToggled="false"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="CenterAndExpand"
+                                    />
+                            </Grid>
+
+                            <Picker Grid.Row="4" 
+                                    Title="- Tiendas -" 
+                                    ItemsSource="{Binding Stores}" 
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedStores}"/>
+                            <Entry Grid.Row="5"
+                                   Placeholder="Stock"
+                                   Keyboard="Numeric"
+                                   Text="{Binding InStock}">
+                            </Entry>
+                            <Entry Grid.Row="6"
+                                   Placeholder="Stock Bajo"
+                                   Keyboard="Numeric"
+                                   Text="{Binding LowStock}">
+                            </Entry>
+                            <Entry Grid.Row="7"
+                                   Placeholder="Stock Optimo"
+                                   Keyboard="Numeric"
+                                   Text="{Binding OptimumStock}">
+                            </Entry>
+                            <Entry Grid.Row="8"  
+                                   Keyboard="Numeric"
+                                   Placeholder="Precio"
+                                   Text="{Binding Price}">
+                                <Entry.Behaviors>
+                                    <helper:MaskBehaviorEntry MaxLength="10" 
+                                                              MaskType="Decimal"
+                                                              />
+                                </Entry.Behaviors>
+                            </Entry>
+
+                            <Entry  Grid.Row="9" 
+                                    Keyboard="Numeric"
+                                    Placeholder="Costo"
+                                    MaxLength="10"
+                                    Text="{Binding Cost}">
+                                <Entry.Behaviors>
+                                    <helper:MaskBehaviorEntry MaxLength="10" 
+                                                              MaskType="Decimal"
+                                                              />
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Button Grid.Row="10"
+                                    Text="Agregar a Inventario"
+                                    BackgroundColor="#146AB0"
+                                    CornerRadius="3"
+                                    TextColor="White"
+                                    Command="{Binding AddProductInventoryCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                    <Frame Grid.Row="1" 
+                           CornerRadius="30" 
+                           BackgroundColor="White" 
+                           Margin="20,20,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Stock en Tiendas"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListViewInventory}"
+                                      CachingStrategy="RecycleElement"
+                                      HasUnevenRows="True"
+                                      HorizontalOptions="CenterAndExpand">
+                                <ListView.Header>
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="180" />
+                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="40" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Tienda"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="1"
+                                               Text="Bajo"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="2"
+                                               Text="Optimo"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="3"
+                                               Text="Stock"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid VerticalOptions="CenterAndExpand">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="180" />
+                                                    <ColumnDefinition Width="30" />
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="40" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Grid.Column = "0" 
+                                                       XAlign = "Start" 
+                                                       Text="{Binding StoreName}"
+                                                       TextColor = "Gray"
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "1" 
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding LowStock}" 
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "2" 
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding OptimumStock}"
+                                                       
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "3" 
+                                                       XAlign = "End"
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding InStock}" 
+                                                       FontSize="14"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.Footer>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="20"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="190" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <!--Total-->
+                                        <Label Grid.Column="0"
+                                               Grid.Row="0"
+                                               XAlign = "End"
+                                               Text="Total Stock"
+                                               FontSize="18"/>
+                                        <Label Grid.Column="2"
+                                               Grid.Row="0"
+                                               XAlign = "End"
+                                               Text=" "
+                                               FontSize="18"/>
+                                        <Label Grid.Column="3"
+                                               Grid.Row="0"
+                                               Text="{Binding TotalProducts,Mode=TwoWay}"
+                                               FontSize="18"/>
+                                        <!--Total-->
+                                    </Grid>
+
+                                </ListView.Footer>
+                            </ListView>
+
+                            <Button Grid.Row="2"
+                                    Text="Agregar a Almacén"
+                                    BackgroundColor="#146AB0"
+                                    CornerRadius="3"
+                                    TextColor="White"
+                                    Command="{Binding AddInventoryCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
 </ContentPage>

@@ -36,6 +36,31 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         public ICommand AddProductCommand { get; private set; }
         public ICommand ScannCommand { get; private set; }
 
+        private ListViewProducts _selectedProduct { get; set; }
+
+        public ListViewProducts SelectedProduct
+        {
+            get
+            {
+                return _selectedProduct;
+            }
+            set
+            {
+                if (_selectedProduct != value)
+                {
+                    _selectedProduct = value;
+                    HandleSelectedProduct();
+                }
+            }
+        }
+
+        private void HandleSelectedProduct()
+        {
+            var navigationParams = new NavigationParameters();
+            navigationParams.Add("productsId", SelectedProduct.ProductsId);
+            _navigationService.NavigateAsync("AddProductPage", navigationParams);
+        }
+
         public ListProductsPageViewModel(
             INavigationService navigationService,
             IProductsService productsService)
