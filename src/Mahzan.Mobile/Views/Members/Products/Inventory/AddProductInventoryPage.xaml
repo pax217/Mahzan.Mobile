@@ -174,8 +174,8 @@
                                 <ListView.Header>
                                     <Grid VerticalOptions="CenterAndExpand">
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="180" />
-                                            <ColumnDefinition Width="30" />
+                                            <ColumnDefinition Width="160" />
+                                            <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="50" />
                                             <ColumnDefinition Width="40" />
                                         </Grid.ColumnDefinitions>
@@ -187,14 +187,14 @@
                                                FontAttributes="Bold">
                                         </Label>
                                         <Label Grid.Column="1"
-                                               Text="Bajo"
+                                               Text="Costo"
                                                HorizontalOptions = "Center"
                                                VerticalOptions="Center"
                                                FontSize="14"
                                                FontAttributes="Bold">
                                         </Label>
                                         <Label Grid.Column="2"
-                                               Text="Optimo"
+                                               Text="Precio"
                                                HorizontalOptions = "Center"
                                                VerticalOptions="Center"
                                                FontSize="14"
@@ -214,8 +214,8 @@
                                         <ViewCell>
                                             <Grid VerticalOptions="CenterAndExpand">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="180" />
-                                                    <ColumnDefinition Width="30" />
+                                                    <ColumnDefinition Width="160" />
+                                                    <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="50" />
                                                     <ColumnDefinition Width="40" />
                                                 </Grid.ColumnDefinitions>
@@ -229,13 +229,13 @@
                                                 <Label Grid.Column = "1" 
                                                        HorizontalOptions = "Center"
                                                        VerticalOptions="Center"
-                                                       Text="{Binding LowStock}" 
+                                                       Text="{Binding Cost}" 
                                                        FontSize="14"/>
 
                                                 <Label Grid.Column = "2" 
                                                        HorizontalOptions = "Center"
                                                        VerticalOptions="Center"
-                                                       Text="{Binding OptimumStock}"
+                                                       Text="{Binding Price}"
                                                        
                                                        FontSize="14"/>
 
@@ -252,17 +252,16 @@
                                 <ListView.Footer>
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="30"/>
-                                            <RowDefinition Height="20"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="190" />
-                                            <ColumnDefinition Width="10" />
-                                            <ColumnDefinition Width="60" />
-                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="160" />
+                                            <ColumnDefinition Width="50" />
+                                            <ColumnDefinition Width="40" />
                                         </Grid.ColumnDefinitions>
                                         <!--Total-->
-                                        <Label Grid.Column="0"
+                                        <Label Grid.Column="1"
                                                Grid.Row="0"
                                                XAlign = "End"
                                                Text="Total Stock"
@@ -275,6 +274,8 @@
                                         <Label Grid.Column="3"
                                                Grid.Row="0"
                                                Text="{Binding TotalProducts,Mode=TwoWay}"
+                                               VerticalTextAlignment="Center"
+                                               XAlign = "Center"
                                                FontSize="18"/>
                                         <!--Total-->
                                     </Grid>

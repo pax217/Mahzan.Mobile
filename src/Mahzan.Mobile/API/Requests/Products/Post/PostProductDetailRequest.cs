@@ -19,5 +19,7 @@ namespace Mahzan.Mobile.API.Requests.Products.Post
         public decimal Price { get; set; }
 
         public decimal? Cost { get; set; }
+
+        public bool FollowInventory { get; set; }
     }
 }

@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.SelectStorePage">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="store_background.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+
+                            </Grid.RowDefinitions>
+                            <Label Text="Selecciona una Tienda"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="14">
+                            </Label>
+                            <BoxView Grid.Row="1"
+                                     HorizontalOptions="FillAndExpand" 
+                                     HeightRequest="1"
+                                     BackgroundColor="Silver">
+                            </BoxView>
+                            <Picker Grid.Row="2"
+                                    Title=" - Tiendas - "
+                                    FontSize="Small"
+                                    ItemsSource="{Binding ListStores}"
+                                    ItemDisplayBinding="{Binding Name}"
+                                    SelectedItem="{Binding SelectedStore }">
+                            </Picker>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

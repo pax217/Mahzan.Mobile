@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" xmlns:helper="clr-namespace:Mahzan.Mobile.Helpers.MaskBehaivior"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Sales.NewSale.EndSalePage"
+             Title="Final de Venta">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_end_sale.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Detalle de Venta"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <StackLayout Grid.Row="2">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="40"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="40"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Row="0"
+                                           Grid.Column="0"
+                                           XAlign="Center"
+                                           Text="{Binding Total, Mode=TwoWay}"
+                                           FontSize="40">
+                                    </Label>
+                                    <Label Grid.Row="0"
+                                           Grid.Column="1"
+                                           XAlign="Center"
+                                           Text="{Binding CashExchange, Mode=TwoWay}"
+                                           FontSize="40">
+                                    </Label>
+                                    <Label Grid.Row="1"
+                                           Grid.Column="0"
+                                           XAlign="Center"
+                                           Text="Total Pagado"
+                                           FontSize="18">
+                                    </Label>
+                                    <Label Grid.Row="1"
+                                           Grid.Column="1"
+                                           XAlign="Center"
+                                           Text="Cambio"
+                                           FontSize="18">
+                                    </Label>
+                                    <Entry  Grid.Row="3"
+                                            Grid.ColumnSpan="2"
+                                            Placeholder="Email">
+                                        <Entry.Behaviors>
+                                            <helper:MaskBehaviorEntry MaxLength="10" 
+                                                                      MaskType="Email"/>
+                                        </Entry.Behaviors>
+                                    </Entry>
+                                    <Button Grid.Row="4"
+                                            Grid.ColumnSpan="2"
+                                            Text="Enviar Ticket"
+                                            BackgroundColor="#146AB0"
+                                            CornerRadius="3"
+                                            TextColor="White"
+                                            Command="{Binding SendTicketCommand}">
+                                    </Button>
+                                    <Button Grid.Row="6"
+                                            Grid.ColumnSpan="2"
+                                            Text="Nueva Venta"
+                                            BackgroundColor="#146AB0"
+                                            CornerRadius="3"
+                                            TextColor="White"
+                                            Command="{Binding NewSaleCommand}">
+                                    </Button>
+                                </Grid>
+                            </StackLayout>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

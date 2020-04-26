@@ -56,6 +56,28 @@ namespace Mahzan.Mobile.ViewModels
             }
         }
 
+        private string _storeName { get; set; }
+        public string StoreName
+        {
+            get => _storeName;
+            set
+            {
+                _storeName = value;
+                OnPropertyChanged(nameof(StoreName));
+            }
+        }
+
+        private string _pontOfSale { get; set; }
+        public string PontOfSale
+        {
+            get => _pontOfSale;
+            set
+            {
+                _pontOfSale = value;
+                OnPropertyChanged(nameof(PontOfSale));
+            }
+        }
+
         public MainPageViewModel(
             INavigationService navigationService,
             IRepository<AspNetUsers> aspNetUsersRepository)
@@ -82,6 +104,8 @@ namespace Mahzan.Mobile.ViewModels
 
             Role = aspNetUsers.FirstOrDefault().Role;
             UserName = aspNetUsers.FirstOrDefault().UserName;
+            StoreName = aspNetUsers.FirstOrDefault().StoreName;
+            PontOfSale = aspNetUsers.FirstOrDefault().PointOfSaleName;
 
             switch (aspNetUsers.FirstOrDefault().Role)
             {
@@ -102,42 +126,37 @@ namespace Mahzan.Mobile.ViewModels
             {
                 Icon = "ic_viewa",
                 PageName = nameof(IndexSalesPage),
-                Title = "Ventas"
+                Title = "Ventas",
             });
 
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
                 PageName = nameof(IndexProductsPage),
-                Title = "Productos"
+                Title = "Productos",
             });
+
 
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
-                PageName = nameof(ViewB),
-                Title = "Tickets"
+                PageName = nameof(IndexWorkEnviromentPage),
+                Title = "Entorno de Trabajo",
             });
 
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
                 PageName = nameof(IndexWorkEnviromentPage),
-                Title = "Entorno de Trabajo"
-            });
-
-            result.Add(new MyMenuItem()
-            {
-                Icon = "ic_viewb",
-                PageName = nameof(ViewB),
-                Title = "Configuración"
+                Title = "Configuración",
             });
 
             result.Add(new MyMenuItem()
             {
                 Icon = "ic_viewb",
                 PageName = nameof(LoginPage),
-                Title = "Salir"
+                Title = "Salir",
+                ExitAplication = true
             });
 
             return result;
@@ -145,7 +164,14 @@ namespace Mahzan.Mobile.ViewModels
 
         async void Navigate()
         {
-            await _navigationService.NavigateAsync(nameof(NavigationPage) + "/" + SelectedMenuItem.PageName);
+            if (!SelectedMenuItem.ExitAplication)
+            {
+                await _navigationService.NavigateAsync(nameof(NavigationPage) + "/" + SelectedMenuItem.PageName);
+            }
+            else 
+            {
+                Application.Current.MainPage = new LoginPage();
+            }
         }
     }
 }

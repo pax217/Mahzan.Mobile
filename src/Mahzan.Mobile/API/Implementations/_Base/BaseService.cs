@@ -11,8 +11,8 @@ namespace Mahzan.Mobile.API.Implementations._Base
     {
         private readonly IRepository<SqLite.Entities.AspNetUsers> _aspNetUsersRepository;
 
-        public static string URL_API = "http://localhost:5000";
-
+        //public static string URL_API = "http://localhost:5000";
+        public static string URL_API = "http://localhost:6472";
         public static string TOKEN { get; set; }
 
         public BaseService(

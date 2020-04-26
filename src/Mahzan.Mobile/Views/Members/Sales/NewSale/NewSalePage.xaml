@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Sales.NewSale.NewSalePage"
+             Title="Nueva Venta">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemBarCode"
+                     IconImageSource="icon_barcode.png"
+                     Command="{Binding ButtonBarCodeCommand}"
+                     Order="Primary">
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItemAddClient"
+                     IconImageSource="icon_add_client.png">
+        </ToolbarItem>
+        <ToolbarItem x:Name="toolbarItemTicketDelete"
+                     IconImageSource="icon_delete.png"
+                     Command="{Binding ButtonEraseTiketCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_ticket.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="220"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Ticket"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <ListView Grid.Row="1"
+                                      ItemsSource="{Binding ListViewTicketDetail}"
+                                      CachingStrategy="RecycleElement"
+                                      HasUnevenRows="True"
+                                      HorizontalOptions="CenterAndExpand">
+                                <ListView.Header>
+                                    <Grid VerticalOptions="CenterAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="190" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0"
+                                               Text="Descripción"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="1"
+                                               Text=""
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="2"
+                                               Text="Precio"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                        <Label Grid.Column="3"
+                                               Text="Monto"
+                                               HorizontalOptions = "Center"
+                                               VerticalOptions="Center"
+                                               FontSize="14"
+                                               FontAttributes="Bold">
+                                        </Label>
+                                    </Grid>
+                                </ListView.Header>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid VerticalOptions="CenterAndExpand">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="190" />
+                                                    <ColumnDefinition Width="10" />
+                                                    <ColumnDefinition Width="60" />
+                                                    <ColumnDefinition Width="60" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Label Grid.Column = "0" 
+                                                       XAlign = "Start" 
+                                                       Text="{Binding Description}"
+                                                       TextColor = "Gray"
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "1" 
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding Quantity}" 
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "2" 
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding Price}" 
+                                                       FontSize="14"/>
+
+                                                <Label Grid.Column = "3" 
+                                                       XAlign = "End"
+                                                       HorizontalOptions = "Center"
+                                                       VerticalOptions="Center"
+                                                       Text="{Binding Amount}" 
+                                                       FontSize="14"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.Footer>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="30"/>
+                                            <RowDefinition Height="20"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="190" />
+                                            <ColumnDefinition Width="10" />
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="60" />
+                                        </Grid.ColumnDefinitions>
+                                        <!--Total-->
+                                        <Label Grid.Column="0"
+                                               Grid.Row="0"
+                                               XAlign = "End"
+                                               Text="Total"
+                                               FontSize="18"/>
+                                        <Label Grid.Column="2"
+                                               Grid.Row="0"
+                                               XAlign = "End"
+                                               Text="$"
+                                               FontSize="18"/>
+                                        <Label Grid.Column="3"
+                                               Grid.Row="0"
+                                               Text="{Binding Total,Mode=TwoWay}"
+                                               FontSize="18"/>
+                                        <!--Total-->
+
+                                        <!--Total de Articulos-->
+                                        <Label Grid.Column="0"
+                                               Grid.Row="2"
+                                               XAlign = "End"
+                                               Text="# Productos Vendidos"
+                                               VerticalOptions="End"
+                                               VerticalTextAlignment="End"
+                                               FontSize="14"/>
+                                        <Label Grid.Column="1"
+                                               Grid.Row="2"
+                                               XAlign = "Start"
+                                               Text="{Binding TotalProducts,Mode=TwoWay}"
+                                               VerticalOptions="End"
+                                               VerticalTextAlignment="End"
+                                               FontSize="16"/>
+                                        <!--/Total de Articulos-->
+                                    </Grid>
+
+                                </ListView.Footer>
+                            </ListView>
+                            <Button Grid.Row="2"
+                                    Text="Cobrar "
+                                    BackgroundColor="SteelBlue"
+                                    BorderRadius="20"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    Command="{Binding ChargeTicketCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

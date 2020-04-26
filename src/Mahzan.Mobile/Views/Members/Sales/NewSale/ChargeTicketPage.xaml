@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com" xmlns:helper="clr-namespace:Mahzan.Mobile.Helpers.MaskBehaivior"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Sales.NewSale.ChargeTicketPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="toolbarItemBarCode"
+                     Text="Dividir">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_charge_ticket.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Text="Detalle de cobro"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Label Grid.Row="1" 
+                                   XAlign = "Center" 
+                                   Text="{Binding Total,Mode=TwoWay}"
+                                   FontSize="50">
+                            </Label>
+                            <Label Grid.Row="2" 
+                                   XAlign = "Center" 
+                                   Text="Cantidad total a pagar"
+                                   FontSize="16">
+                            </Label>
+                            <Entry Grid.Row="3"
+                                   Placeholder="Efectivo recibido"
+                                   Text="{Binding CashPayment}"
+                                   Keyboard="Numeric"
+                                   MaxLength="10">
+                                <Entry.Behaviors>
+                                    <helper:MaskBehaviorEntry MaxLength="10" 
+                                                              MaskType="Decimal"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Picker Grid.Row="4" 
+                                    Title="- Tipos de Pago -" 
+                                    ItemsSource="{Binding PaymentTypes,Mode=TwoWay}" 
+                                    ItemDisplayBinding="{Binding Name,Mode=TwoWay}"
+                                    SelectedItem="{Binding SelectedPaymentType, Mode=TwoWay}">
+                            </Picker>
+                            <Button Grid.Row="6"
+                                    Text="Cerrar Venta"
+                                    BackgroundColor="SteelBlue"
+                                    BorderRadius="20"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    Command="{Binding EndSaleCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

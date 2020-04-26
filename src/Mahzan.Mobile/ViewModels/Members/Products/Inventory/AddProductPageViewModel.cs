@@ -42,6 +42,15 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private Guid? ProductsId { get; set; }
 
+        //FollowInventory
+        private bool _switchFollowInventory;
+        public bool SwitchFollowInventory
+        {
+            get => _switchFollowInventory;
+            set => SetProperty(ref _switchFollowInventory, value);
+        }
+
+
         //Image
         private ImageSource _productImageSource;
         public ImageSource ProductImageSource
@@ -205,7 +214,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     Barcode = BarCode,
                     Description = Description,
                     Price = Price,
-                    Cost = Cost
+                    Cost = Cost,
+                    FollowInventory = SwitchFollowInventory
                 }
             };
 
@@ -218,11 +228,25 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
                 if (postProductsResult.IsValid)
                 {
+                    //Si el producto se sigue en el inventario
+                    if (SwitchFollowInventory)
+                    {
+                        var navigationParams = new NavigationParameters();
+                        navigationParams.Add("productsId", postProductsResult.Product.ProductsId);
 
-                    var navigationParams = new NavigationParameters();
-                    navigationParams.Add("productsId", postProductsResult.Product.ProductsId);
+                        await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
 
-                    await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
+                    }
+                    else 
+                    {
+                        await Application
+                            .Current
+                            .MainPage
+                            .DisplayAlert(postProductsResult.Title,
+                                          postProductsResult.Message,
+                                          "ok");
+                    
+                    }
                 }
                 else
                 {

@@ -143,7 +143,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     LowStock = productStores.LowStock,
                     OptimumStock = productStores.OptimumStock,
                     ProductsId = productStores.ProductsId,
-                    StoresId = productStores.StoresId
+                    StoresId = productStores.StoresId,
                 });
             }
 
@@ -230,9 +230,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     StoreName = Stores
                                 .SingleOrDefault(x => x.StoresId == product_Store.StoresId)
                                 .Name,
-                    InStock = InStock,
-                    LowStock = LowStock,
-                    OptimumStock = OptimumStock
+                    Cost = product_Store.Cost.Value,
+                    Price = product_Store.Price,
+                    InStock = product_Store.InStock.Value,
                 });
 
                 totalStock += product_Store.InStock;
@@ -271,8 +271,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
     {
         public Guid StoresId { get; set; }
         public string StoreName { get; set; }
+        public decimal Cost { get; set; }
+        public decimal Price { get; set; }
         public decimal InStock { get; set; }
-        public decimal LowStock { get; set; }
-        public decimal OptimumStock { get; set; }
+
     }
 }

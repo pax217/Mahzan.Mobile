@@ -35,6 +35,16 @@ using Mahzan.Mobile.API.Implementations.ProductUnits;
 using Mahzan.Mobile.API.Interfaces.ProductUnits;
 using Mahzan.Mobile.API.Implementations.ProductsStore;
 using Mahzan.Mobile.API.Interfaces.ProductsStore;
+using Mahzan.Mobile.Views.Members.Sales.NewSale;
+using Mahzan.Mobile.ViewModels.Members.Sales.NewSale;
+using Mahzan.Mobile.API.Interfaces.Tickets;
+using Mahzan.Mobile.API.Implementations.Tickets;
+using Mahzan.Mobile.API.Interfaces.EmployeesStores;
+using Mahzan.Mobile.API.Implementations.EmployeesStores;
+using Mahzan.Mobile.API.Interfaces.PointsOfSales;
+using Mahzan.Mobile.API.Implementations.PointsOfSales;
+using Mahzan.Mobile.API.Implementations.PaymentTypes;
+using Mahzan.Mobile.API.Interfaces.PaymentTypes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -69,6 +79,10 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IProductUnitsService, ProductUnitsService>();
             containerRegistry.Register<IStoresService, StoresService>();
             containerRegistry.Register<IProductsStoreService, ProductsStoreService>();
+            containerRegistry.Register<ITicketsService, TicketsService>();
+            containerRegistry.Register<IEmployeesStoresService, EmployeesStoresService>();
+            containerRegistry.Register<IPointsOfSalesService, PointsOfSalesService>();
+            containerRegistry.Register<IPaymentTypesService, PaymentTypesService>();
 
             //Repository
             containerRegistry.Register<IRepository<AspNetUsers>, Repository<AspNetUsers>>();
@@ -78,8 +92,6 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<DashboardPage, DashboardPageViewModel>();
-            containerRegistry.RegisterForNavigation<ViewA, ViewAViewModel>();
-            containerRegistry.RegisterForNavigation<ViewB, ViewBViewModel>();
             containerRegistry.RegisterForNavigation<IndexWorkEnviromentPage, IndexWorkEnviromentPageViewModel>();
             containerRegistry.RegisterForNavigation<ListStoresPage, ListStoresPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminStorePage, AdminStorePageViewModel>();
@@ -88,6 +100,11 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<ListProductsPage, ListProductsPageViewModel>();
             containerRegistry.RegisterForNavigation<AddProductPage, AddProductPageViewModel>();
             containerRegistry.RegisterForNavigation<AddProductInventoryPage, AddProductInventoryPageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectStorePage, SelectStorePageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectPointsOfSalesPage, SelectPointsOfSalesPageViewModel>();
+            containerRegistry.RegisterForNavigation<NewSalePage, NewSalePageViewModel>();
+            containerRegistry.RegisterForNavigation<ChargeTicketPage, ChargeTicketPageViewModel>();
+            containerRegistry.RegisterForNavigation<EndSalePage, EndSalePageViewModel>();
         }
     }
 }

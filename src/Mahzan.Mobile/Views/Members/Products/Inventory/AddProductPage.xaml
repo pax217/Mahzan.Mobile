@@ -33,7 +33,7 @@
                            BackgroundColor="White" 
                            Grid.RowSpan="2" 
                            Margin="20,150,20,20">
-                        <Grid RowSpacing="11">
+                        <Grid RowSpacing="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -41,12 +41,38 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
-                            <Label Text="Detalle de Producto"
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                <ColumnDefinition Width="*"></ColumnDefinition>
+                            </Grid.ColumnDefinitions>
+                            
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="Detalle de Producto"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Image Grid.Row="1"
+                            <Switch Grid.Row="1"
+                                    Grid.Column="0"
+                                    IsToggled="{Binding SwitchFollowInventory}"
+                                    HorizontalOptions="Center"
+                                    VerticalOptions="End" >
+                                
+                            </Switch>
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="Seguir en Inventario" 
+                                   FontSize="16"
+                                   VerticalOptions="End">
+                            </Label>
+
+
+                            <Image Grid.Row="2"
+                                   Grid.ColumnSpan="2"
                                    Source="{Binding ProductImageSource, Mode=TwoWay}"
                                    Aspect="AspectFill"
                                    HorizontalOptions="FillAndExpand"
@@ -54,35 +80,41 @@
                                    HeightRequest="300"
                                    WidthRequest="150">
                             </Image>
-                            <Entry Grid.Row="2"
+                            <Entry Grid.Row="3"
+                                   Grid.ColumnSpan="2"
                                    Placeholder="SKU"
                                    Text="{Binding SKU, Mode=TwoWay}">
                             </Entry>
 
-                            <Entry Grid.Row="3"
+                            <Entry Grid.Row="4"
+                                   Grid.ColumnSpan="2"
                                    Placeholder="Código de Barras"
                                    Text="{Binding BarCode, Mode=TwoWay}">
 
                             </Entry>
                             <Entry Grid.Row="5"
+                                   Grid.ColumnSpan="2"
                                    Placeholder="Descripción"
                                    Text="{Binding Description, Mode=TwoWay}">
                             </Entry>
 
-                            <Picker Grid.Row="6" 
+                            <Picker Grid.Row="6"
+                                    Grid.ColumnSpan="2"
                                     Title="- Categorías -" 
                                     ItemsSource="{Binding ProductCategories, Mode=TwoWay}" 
                                     ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedProductCategory , Mode=TwoWay}"/>
 
 
-                            <Picker Grid.Row="7" 
+                            <Picker Grid.Row="7"
+                                    Grid.ColumnSpan="2"
                                     Title="- Unidades -" 
                                     ItemsSource="{Binding ProductUnits, Mode=TwoWay}" 
                                     ItemDisplayBinding="{Binding Description, Mode=TwoWay}"
                                     SelectedItem="{Binding SelectedProductUnit, Mode=TwoWay}"/>
 
-                            <Entry Grid.Row="8"  
+                            <Entry Grid.Row="8"
+                                   Grid.ColumnSpan="2"  
                                    Keyboard="Numeric"
                                    Placeholder="Precio"
                                    Text="{Binding Price, Mode=TwoWay}">
@@ -93,7 +125,8 @@
                                 </Entry.Behaviors>
                             </Entry>
 
-                            <Entry  Grid.Row="9" 
+                            <Entry  Grid.Row="9"
+                                    Grid.ColumnSpan="2"
                                     Keyboard="Numeric"
                                     Placeholder="Costo"
                                     MaxLength="10"
@@ -105,8 +138,8 @@
                                 </Entry.Behaviors>
                             </Entry>
 
-                            <Button x:Name="buttonEnviar"
-                                    Grid.Row="10"
+                            <Button Grid.Row="10"
+                                    Grid.ColumnSpan="2"
                                     Text="Agregar"
                                     BackgroundColor="#146AB0"
                                     CornerRadius="3"

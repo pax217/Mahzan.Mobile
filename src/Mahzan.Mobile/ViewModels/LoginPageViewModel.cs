@@ -68,7 +68,8 @@ namespace Mahzan.Mobile.ViewModels
                 switch (logInResult.Role)
                 {
                     case "MEMBER":
-                        await NavigationService.NavigateAsync(nameof(MainPage) + "/" + nameof(NavigationPage) + "/" + nameof(DashboardPage));
+                        //await NavigationService.NavigateAsync(nameof(MainPage) + "/" + nameof(NavigationPage) + "/" + nameof(SelectStorePage));
+                        await NavigationService.NavigateAsync("SelectStorePage");
                         break;
                     case "EMPLOYEE_CASHIER":
 

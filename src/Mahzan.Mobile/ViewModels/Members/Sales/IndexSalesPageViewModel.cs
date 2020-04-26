@@ -42,6 +42,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales
             ListSalesOptionItems = new ObservableCollection<SalesOptions>()
             {
                 new SalesOptions(){ Option ="Nueva Venta",OptionDetail="Crea una venta para tus Clientes"},
+                new SalesOptions(){ Option ="Tickets",OptionDetail="Consulta los tickets de tus Ventas"},
+
             };
         }
 
@@ -49,8 +51,11 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales
         {
             switch (_selectedSaleOption.Option)
             {
-                case "Tiendas":
-                    _navigationService.NavigateAsync("ListStoresPage");
+                case "Nueva Venta":
+                    _navigationService.NavigateAsync("NewSalePage");
+                    break;
+                case "Tickets":
+                    _navigationService.NavigateAsync("NewSalePage");
                     break;
                 default:
                     break;
