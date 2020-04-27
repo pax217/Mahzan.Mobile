@@ -42,6 +42,8 @@ namespace Mahzan.Mobile.API.Entities
         public Guid PaymentTypesId { get; set; }
         //public PaymentTypes PaymentTypes { get; set; }
 
+
+        public List<TicketDetail> TicketDetails { get; set; }
         #endregion
     }
 }

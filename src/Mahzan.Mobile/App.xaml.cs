@@ -45,6 +45,8 @@ using Mahzan.Mobile.API.Interfaces.PointsOfSales;
 using Mahzan.Mobile.API.Implementations.PointsOfSales;
 using Mahzan.Mobile.API.Implementations.PaymentTypes;
 using Mahzan.Mobile.API.Interfaces.PaymentTypes;
+using Mahzan.Mobile.Views.Members.Sales.Tickets;
+using Mahzan.Mobile.ViewModels.Members.Sales.Tickets;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -105,6 +107,8 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<NewSalePage, NewSalePageViewModel>();
             containerRegistry.RegisterForNavigation<ChargeTicketPage, ChargeTicketPageViewModel>();
             containerRegistry.RegisterForNavigation<EndSalePage, EndSalePageViewModel>();
+            containerRegistry.RegisterForNavigation<ListTicketsPage, ListTicketsPageViewModel>();
+            containerRegistry.RegisterForNavigation<TicketPage, TicketPageViewModel>();
         }
     }
 }

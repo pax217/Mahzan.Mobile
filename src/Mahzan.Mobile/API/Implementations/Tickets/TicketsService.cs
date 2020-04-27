@@ -1,4 +1,5 @@
 ﻿using Mahzan.Mobile.API.Enums.Results;
+using Mahzan.Mobile.API.Filters.Tickets;
 using Mahzan.Mobile.API.Implementations._Base;
 using Mahzan.Mobile.API.Interfaces.Tickets;
 using Mahzan.Mobile.API.Requests.Tickets;
@@ -11,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Mahzan.Mobile.API.Implementations.Tickets
 {
@@ -21,6 +23,82 @@ namespace Mahzan.Mobile.API.Implementations.Tickets
             : base(aspNetUsersRepository)
         {
 
+        }
+
+        public async Task<GetTicketsResult> Get(GetTicketsFilter filter)
+        {
+            GetTicketsResult result = new GetTicketsResult();
+            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Tickets");
+
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+                if (filter.CreatedAt!=null)
+                {
+                    query["CreatedAt"] = filter.CreatedAt.Value.Date.ToString();
+                }
+
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(uriBuilder.ToString());
+
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<GetTicketsResult>(respuesta);
+            }
+            catch (Exception ex)
+            {
+                result.IsValid = false;
+                result.ResultTypeEnum = ResultTypeEnum.ERROR;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<GetTicketResult> GetById(Guid ticketsId)
+        {
+            GetTicketResult result = new GetTicketResult();
+            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Tickets/" + ticketsId.ToString());
+
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+                //if (filter.CreatedAt != null)
+                //{
+                //    query["CreatedAt"] = filter.CreatedAt.Value.Date.ToString();
+                //}
+
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(uriBuilder.ToString());
+
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<GetTicketResult>(respuesta);
+            }
+            catch (Exception ex)
+            {
+                result.IsValid = false;
+                result.ResultTypeEnum = ResultTypeEnum.ERROR;
+                result.Message = ex.Message;
+            }
+
+            return result;
         }
 
         public async Task<PostTicketCalculationResult> TicketCalculation(PostTicketCalculationRequest postTicketCalculationRequest)

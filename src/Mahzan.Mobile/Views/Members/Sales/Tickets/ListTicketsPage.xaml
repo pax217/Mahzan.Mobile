@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Sales.Tickets.ListTicketsPage"
+             Title="Tickets">
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_ticket.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="11">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="230"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="2"
+                                   Text="Tickets de Venta"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <!--DatePicker-->
+                            <Label Grid.Row="1"
+                                   Text="Selecciona una fecha de venta"
+                                   HorizontalTextAlignment="Center">
+                            </Label>
+                            <DatePicker Grid.Row="2"
+                                        HorizontalOptions="Center"
+                                        Format="dd/MM/yyyy"
+                                        Date="{Binding CreatedAt, Mode=TwoWay}"
+                                        />
+
+                            <!--/DatePicker-->
+                            <ListView Grid.Row="3"
+                                      ItemsSource="{Binding ListViewTickets}"
+                                      SelectedItem="{Binding SelectedTicket}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="18"/>
+                                                    <RowDefinition Height="Auto"/>
+                                                </Grid.RowDefinitions>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                
+                                                <Label Grid.Row="0"
+                                                       Grid.Column="0"
+                                                       Text="{Binding CreatedAt,  StringFormat='{0:dd-MM-yyyy HH:mm:ss}'}"
+                                                       FontSize="16"
+                                                       TextColor="Red">
+                                                </Label>
+                                                <Label Grid.Row="0"
+                                                       Grid.Column="1"
+                                                       Text="{Binding Total, StringFormat='$ {0}'}"
+                                                       FontSize="16"
+                                                       FontAttributes="Bold">
+                                                </Label>
+                                                <Label Grid.Row="2"
+                                                       Grid.Column="0"
+                                                       Text="{Binding TotalProducts, StringFormat='Total de Productos {0}'}"
+                                                       FontSize="14"
+                                                       VerticalTextAlignment="End"
+                                                       XAlign="End">
+                                                </Label>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

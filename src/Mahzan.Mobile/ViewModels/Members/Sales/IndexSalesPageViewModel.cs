@@ -43,7 +43,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales
             {
                 new SalesOptions(){ Option ="Nueva Venta",OptionDetail="Crea una venta para tus Clientes"},
                 new SalesOptions(){ Option ="Tickets",OptionDetail="Consulta los tickets de tus Ventas"},
-
             };
         }
 
@@ -55,7 +54,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales
                     _navigationService.NavigateAsync("NewSalePage");
                     break;
                 case "Tickets":
-                    _navigationService.NavigateAsync("NewSalePage");
+                    _navigationService.NavigateAsync("ListTicketsPage");
                     break;
                 default:
                     break;
