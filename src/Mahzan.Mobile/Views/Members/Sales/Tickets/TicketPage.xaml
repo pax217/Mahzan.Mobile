@@ -173,7 +173,7 @@
                                         <Label Grid.Row="3"
                                                Grid.Column="1"
                                                Grid.ColumnSpan="3"
-                                               Text="{Binding CreatedAt,  StringFormat='{0:dd-MM-yyyy HH:mm:ss}'}"
+                                               Text="{Binding CreatedAt,  StringFormat='{0:dd-MM-yyyy HH:mm:ss}',Mode=TwoWay}"
                                                FontSize="14">
                                         </Label>
                                     </Grid>

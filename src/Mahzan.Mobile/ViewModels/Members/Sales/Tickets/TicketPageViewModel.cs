@@ -62,7 +62,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.Tickets
             set
             {
                 _createdAt = value;
-                OnPropertyChanged(nameof(_createdAt));
+                OnPropertyChanged(nameof(CreatedAt));
             }
         }
 

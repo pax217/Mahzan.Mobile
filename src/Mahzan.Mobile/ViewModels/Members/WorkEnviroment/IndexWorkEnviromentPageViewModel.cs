@@ -53,6 +53,9 @@ namespace Mahzan.Mobile.ViewModels.Members.WorkEnviroment
                 case "Tiendas":
                     _navigationService.NavigateAsync("ListStoresPage");
                     break;
+                case "TPVs":
+                    _navigationService.NavigateAsync("ListPointsOfSalesPage");
+                    break;
                 default:
                     break;
             }

@@ -1,4 +1,5 @@
 ﻿using Mahzan.Mobile.API.Filters.PointsOfSales;
+using Mahzan.Mobile.API.Requests.PointsOfSales;
 using Mahzan.Mobile.API.Results.PointsOfSales;
 using System;
 using System.Collections.Generic;
@@ -10,5 +11,11 @@ namespace Mahzan.Mobile.API.Interfaces.PointsOfSales
     public interface IPointsOfSalesService
     {
         Task<GetPointsOfSalesResult> Get(GetPointsOfSalesFilter getPointsOfSalesFilter);
+
+        Task<PostPointOfSalesResult> Post(PostPointOfSalesRequest request);
+
+        Task<PutPointsOfSalesResult> Put(PutPointsOfSalesRequest request);
+
+        Task<DeletePointsOfSalesResult> Delete(Guid pointsOfSalesId);
     }
 }

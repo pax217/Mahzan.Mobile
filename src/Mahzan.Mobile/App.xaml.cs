@@ -47,6 +47,12 @@ using Mahzan.Mobile.API.Implementations.PaymentTypes;
 using Mahzan.Mobile.API.Interfaces.PaymentTypes;
 using Mahzan.Mobile.Views.Members.Sales.Tickets;
 using Mahzan.Mobile.ViewModels.Members.Sales.Tickets;
+using Mahzan.Mobile.Views.Members.Products.Categories;
+using Mahzan.Mobile.ViewModels.Members.Products.Categories;
+using Mahzan.Mobile.Views.Members.Products.Units;
+using Mahzan.Mobile.ViewModels.Members.Products.Units;
+using Mahzan.Mobile.Views.Members.WorkEnviroment.PointsOfSales;
+using Mahzan.Mobile.ViewModels.Members.WorkEnviroment.PointsOfSales;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -109,6 +115,12 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<EndSalePage, EndSalePageViewModel>();
             containerRegistry.RegisterForNavigation<ListTicketsPage, ListTicketsPageViewModel>();
             containerRegistry.RegisterForNavigation<TicketPage, TicketPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListCategoriesPage, ListCategoriesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminCategoriesPage, AdminCategoriesPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListUnitsPage, ListUnitsPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminUnitsPage, AdminUnitsPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListPointsOfSalesPage, ListPointsOfSalesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminPointsOfSalesPage, AdminPointsOfSalesPageViewModel>();
         }
     }
 }

@@ -7,5 +7,7 @@ namespace Mahzan.Mobile.API.Filters.PointsOfSales
     public class GetPointsOfSalesFilter
     {
         public Guid? StoresId { get; set; }
+
+        public Guid? PointsOfSales { get; set; }
     }
 }

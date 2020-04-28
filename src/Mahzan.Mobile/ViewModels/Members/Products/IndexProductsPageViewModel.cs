@@ -56,6 +56,12 @@ namespace Mahzan.Mobile.ViewModels.Members.Products
                 case "Inventario":
                     _navigationService.NavigateAsync("ListProductsPage");
                     break;
+                case "Categorías":
+                    _navigationService.NavigateAsync("ListCategoriesPage");
+                    break;
+                case "Unidades de Venta":
+                    _navigationService.NavigateAsync("ListUnitsPage");
+                    break;
                 default:
                     break;
             }
