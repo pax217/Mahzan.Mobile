@@ -5,5 +5,5 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Members.DashboardPage"
              Title="Dashboard">
-  
+
 </ContentPage>

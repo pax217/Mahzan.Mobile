@@ -5,6 +5,13 @@
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Members.Sales.Tickets.TicketPage"
              Title="Detalle de Ticket">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Imprimir"
+                     Command="{Binding PrintCommand}">
+            
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.Content>
         <StackLayout>
             <ScrollView>

@@ -53,6 +53,20 @@ using Mahzan.Mobile.Views.Members.Products.Units;
 using Mahzan.Mobile.ViewModels.Members.Products.Units;
 using Mahzan.Mobile.Views.Members.WorkEnviroment.PointsOfSales;
 using Mahzan.Mobile.ViewModels.Members.WorkEnviroment.PointsOfSales;
+using Mahzan.Mobile.Views.Members.Sales.NewSale.NewClient;
+using Mahzan.Mobile.ViewModels.Members.Sales.NewSale.NewClient;
+using Mahzan.Mobile.API.Interfaces.Clients;
+using Mahzan.Mobile.API.Implementations.Clients;
+using Mahzan.Mobile.Services.Interfaces;
+using Mahzan.Mobile.Services.Implementations;
+using Mahzan.Mobile.Views.Members.Settings;
+using Mahzan.Mobile.Views.Members.Settings.Printer;
+using Mahzan.Mobile.ViewModels.Members.Settings;
+using Mahzan.Mobile.ViewModels.Members.Settings.Printer;
+using Mahzan.Mobile.Views.Members.Products.Taxes;
+using Mahzan.Mobile.ViewModels.Members.Products.Taxes;
+using Mahzan.Mobile.API.Implementations.Taxes;
+using Mahzan.Mobile.API.Interfaces.Taxes;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace Mahzan.Mobile
@@ -64,7 +78,9 @@ namespace Mahzan.Mobile
          * This imposes a limitation in which the App class must have a default constructor. 
          * App(IPlatformInitializer initializer = null) cannot be handled by the Activator.
          */
-        public App() : this(null) { }
+        public App() : this(null) {
+        
+        }
 
         public App(IPlatformInitializer initializer) : base(initializer) { }
 
@@ -91,9 +107,15 @@ namespace Mahzan.Mobile
             containerRegistry.Register<IEmployeesStoresService, EmployeesStoresService>();
             containerRegistry.Register<IPointsOfSalesService, PointsOfSalesService>();
             containerRegistry.Register<IPaymentTypesService, PaymentTypesService>();
+            containerRegistry.Register<IClientsService, ClientsService>();
+            containerRegistry.Register<IPrintTicketService, PrintTicketService>();
+            containerRegistry.Register<ITaxesService, TaxesService>();
+            
+
 
             //Repository
             containerRegistry.Register<IRepository<AspNetUsers>, Repository<AspNetUsers>>();
+            containerRegistry.Register<IRepository<BluetoothDevice>, Repository<BluetoothDevice>>();
 
             //Navigation
             containerRegistry.RegisterForNavigation<NavigationPage>();
@@ -121,6 +143,13 @@ namespace Mahzan.Mobile
             containerRegistry.RegisterForNavigation<AdminUnitsPage, AdminUnitsPageViewModel>();
             containerRegistry.RegisterForNavigation<ListPointsOfSalesPage, ListPointsOfSalesPageViewModel>();
             containerRegistry.RegisterForNavigation<AdminPointsOfSalesPage, AdminPointsOfSalesPageViewModel>();
+            containerRegistry.RegisterForNavigation<CreateClientPage, CreateClientPageViewModel>();
+            containerRegistry.RegisterForNavigation<IndexSettingsPage, IndexSettingsPageViewModel>();
+            containerRegistry.RegisterForNavigation<SelectPrinterPage, SelectPrinterPageViewModel>();
+            containerRegistry.RegisterForNavigation<ListTaxesPage, ListTaxesPageViewModel>();
+            containerRegistry.RegisterForNavigation<AdminTaxesPage, AdminTaxesPageViewModel>();
         }
+
+
     }
 }

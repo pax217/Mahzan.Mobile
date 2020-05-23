@@ -82,7 +82,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.Tickets
             }
             else
             {
-                ListViewTickets.Clear();
+                //ListViewTickets.Clear();
 
                 await Application
                       .Current

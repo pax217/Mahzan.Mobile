@@ -57,6 +57,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             }
         }
 
+        //Client
+        private Guid? ClientsId { get; set; }
+
         //Picker
         private ObservableCollection<PaymentTypes> _paymentTypes;
         public ObservableCollection<PaymentTypes> PaymentTypes
@@ -150,7 +153,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
                 var navigationParams = new NavigationParameters();
                 navigationParams.Add("chargeTicketDetail", ChargeTicketDetail);
-
+                navigationParams.Add("closeTicketsId", ChargeTicketDetail);
                 await _navigationService.NavigateAsync("EndSalePage", navigationParams);
 
                 //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new EndSalePage()));
@@ -179,6 +182,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             result.PointsOfSalesId = aspNetUser.PointsOfSalesId;
             result.PaymentTypesId = _selectedPaymentType.PaymentTypesId;
             result.CashPayment = CashPayment;
+            result.ClientsId = ClientsId;
 
 
             if (ListTicketDetail.Any())
@@ -217,6 +221,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
         {
             ListTicketDetail = parameters.GetValue<List<TicketDetail>>("ticketDetail");
             Total = parameters.GetValue<string>("ticketTotal");
+            ClientsId = parameters.GetValue<Guid?>("clientsId");
 
             if (ListTicketDetail != null)
             {

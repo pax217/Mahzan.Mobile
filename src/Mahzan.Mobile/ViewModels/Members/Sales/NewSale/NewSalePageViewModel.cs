@@ -1,8 +1,11 @@
 ﻿using Mahzan.Mobile.API.Entities;
+using Mahzan.Mobile.API.Filters.Clients;
 using Mahzan.Mobile.API.Filters.Products;
+using Mahzan.Mobile.API.Interfaces.Clients;
 using Mahzan.Mobile.API.Interfaces.Products;
 using Mahzan.Mobile.API.Interfaces.Tickets;
 using Mahzan.Mobile.API.Requests.Tickets;
+using Mahzan.Mobile.API.Results.Clients;
 using Mahzan.Mobile.API.Results.Products;
 using Mahzan.Mobile.API.Results.Tickets;
 using Mahzan.Mobile.QrScanning;
@@ -11,26 +14,30 @@ using Mahzan.Mobile.SqLite.Interfaces;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 {
-    public class NewSalePageViewModel : BindableBase
+    public class NewSalePageViewModel : BindableBase, INavigationAware
     {
         //Services
         private readonly INavigationService _navigationService;
+
+        private readonly IPageDialogService _pageDialogService;
 
         private readonly IProductsService _productsService;
 
         private readonly ITicketsService _ticketsService;
 
-
+        private readonly IClientsService _clientsService;
 
         //Models
         private List<TicketDetail> ListTicketDetail = new List<TicketDetail>();
@@ -48,6 +55,37 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             {
                 _listViewTicketDetail = value;
                 OnPropertyChanged(nameof(ListViewTicketDetail));
+            }
+        }
+
+        //Clients
+        private ObservableCollection<Clients> _listClients { get; set; }
+
+        public ObservableCollection<Clients> ListClients
+        {
+            get => _listClients;
+            set
+            {
+                _listClients = value;
+                OnPropertyChanged(nameof(ListClients));
+            }
+        }
+
+        private API.Entities.Clients _selectedClient { get; set; }
+
+        public API.Entities.Clients SelectedClient
+        {
+            get
+            {
+                return _selectedClient;
+            }
+            set
+            {
+                if (_selectedClient != value)
+                {
+                    _selectedClient = value;
+                    OnPropertyChanged(nameof(_selectedClient));
+                }
             }
         }
 
@@ -81,16 +119,24 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
         public ICommand ChargeTicketCommand { get; private set; }
 
+        public ICommand CreateClientCommand { get; private set; }
+
+
+
         public NewSalePageViewModel(
             INavigationService navigationService,
+            IPageDialogService pageDialogService,
             IProductsService productsService,
             ITicketsService ticketsService,
+            IClientsService clientsService,
             IRepository<AspNetUsers> aspNetUsersRepository)
         {
             //Services
             _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
             _productsService = productsService;
             _ticketsService = ticketsService;
+            _clientsService = clientsService;
 
             //Repository
             _aspNetUsersRepository = aspNetUsersRepository;
@@ -99,12 +145,42 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             ButtonBarCodeCommand = new Command(async () => await OnButtonBarCodeCommand());
             ButtonEraseTiketCommand = new Command(async () => await OnButtonEraseTiketCommand());
             ChargeTicketCommand = new Command(async () => await OnChargeTicketCommand());
+            CreateClientCommand = new Command(async () => await OnCreateClientCommand());
+            
 
             ListViewTicketDetail = new ObservableCollection<ListViewTicketDetail>();
 
             Task.Run(() => Initialize());
-            //Task.Run(() => UpdateTicket());
+            Task.Run(() => GetClients());
         }
+
+        private async Task GetClients()
+        {
+            GetClientsResult result = await _clientsService
+                                            .Get(new GetClientsFilter
+                                            {
+
+                                            });
+
+            if (result.IsValid)
+            {
+                ListClients = new ObservableCollection<Clients>(result.Clients);
+            }
+            else 
+            {
+                await _pageDialogService
+                      .DisplayAlertAsync("Obtiene Clientes",
+                                         result.Message,
+                                         "OK");
+                            
+            }
+        }
+
+        private async Task OnCreateClientCommand()
+        {
+            await _navigationService.NavigateAsync("CreateClientPage");
+        }
+
         private async void Initialize()
         {
             List<AspNetUsers> listAspNetUsers;
@@ -119,6 +195,12 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             var navigationParams = new NavigationParameters();
             navigationParams.Add("ticketDetail", ListTicketDetail);
             navigationParams.Add("ticketTotal", Total);
+
+            if (SelectedClient!=null)
+            {
+                navigationParams.Add("clientsId", SelectedClient.ClientsId);
+            }
+
             await _navigationService.NavigateAsync("ChargeTicketPage", navigationParams);
             //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new ChargeTicketPage()));
         }
@@ -146,7 +228,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
         private async Task OnButtonBarCodeCommand()
         {
 
-            var scanner = DependencyService.Get<IQrScanningService>();
+            var scanner = Xamarin.Forms.DependencyService.Get<IQrScanningService>();
             var result = await scanner.ScanAsync();
 
             if (result != "")
@@ -331,14 +413,14 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             //}
         }
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public async void OnNavigatedFrom(INavigationParameters parameters)
         {
-            throw new NotImplementedException();
+
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            throw new NotImplementedException();
+            await GetClients();
         }
     }
 

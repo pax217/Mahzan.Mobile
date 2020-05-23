@@ -15,6 +15,8 @@ namespace Mahzan.Mobile.API.Requests.Tickets
 
         public decimal? CashPayment { get; set; }
 
+        public Guid? ClientsId { get; set; }
+
         public List<PostTicketCalculationDetailRequest> PostTicketCalculationDetailRequest { get; set; }
     }
 

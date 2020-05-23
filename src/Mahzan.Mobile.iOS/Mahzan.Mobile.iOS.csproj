@@ -199,6 +199,9 @@
     <PackageReference Include="Xamarin.Forms">
       <Version>4.5.0.657</Version>
     </PackageReference>
+    <PackageReference Include="XamarinFastEntry.Behaviors">
+      <Version>1.1.1</Version>
+    </PackageReference>
     <PackageReference Include="ZXing.Net.Mobile">
       <Version>2.4.1</Version>
     </PackageReference>

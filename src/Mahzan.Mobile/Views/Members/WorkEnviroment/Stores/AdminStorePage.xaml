@@ -20,7 +20,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
-                    <Image Source="store_background.png"
+                    <Image Source="background_taxes.png"
                            Grid.Row="0"
                            Aspect="AspectFill"
                            HorizontalOptions="FillAndExpand"

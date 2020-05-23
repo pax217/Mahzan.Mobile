@@ -36,7 +36,12 @@ namespace Mahzan.Mobile.API.Implementations.Tickets
 
                 if (filter.CreatedAt!=null)
                 {
-                    query["CreatedAt"] = filter.CreatedAt.Value.Date.ToString();
+                    query["CreatedAt"] = filter.CreatedAt.Value.ToString("yyyy-MM-dd");
+                }
+
+                if (filter.TicketsId != null)
+                {
+                    query["TicketsId"] = filter.TicketsId.ToString();
                 }
 
 

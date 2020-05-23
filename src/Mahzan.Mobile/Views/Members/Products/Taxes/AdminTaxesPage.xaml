@@ -1,0 +1,241 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Products.Taxes.AdminTaxesPage"
+             Title="Detalle Impuesto">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.error.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+
+            <!--Name Style-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleName"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un nombre de impuesto válido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Name Style-->
+
+            <!--Tax Rate Percentage-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleTaxRatePercentage"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un porcentaje válido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Tax Rate Percentage-->
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_taxes.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
+                                   Text="Detalle Impuestos"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+
+                            <!--Name-->
+
+                            <Entry x:Name="EntryName"
+                                   Grid.Row="1"
+                                   Grid.Column="1"
+                                   Placeholder="Nombre de Impuesto"
+                                   Keyboard="Text"
+                                   MaxLength="20"
+                                   Text="{Binding Name}"
+                                   Unfocused="EntryName_Unfocused">
+                                <Entry.Behaviors>
+                                    <local:CharactersValidatiorBehavior x:Name="nameValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="1" 
+                                   Grid.Column="2" 
+                                   x:Name="nameSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference nameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference nameValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleName}}" 
+                                   FontSize="16"/>
+
+                            <!--/Name-->
+
+                            <!--Tax Rate Percentage-->
+                            <Entry x:Name="EntryTaxRatePercentage"
+                                   Grid.Row="3"
+                                   Grid.Column="1"
+                                   Placeholder="Porcentaje de Impuesto"
+                                   Keyboard="Numeric"
+                                   MaxLength="5"
+                                   Text="{Binding TaxRatePercentage}"
+                                   Unfocused="EntryTextRatePercentage_Unfocused">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="taxRatePercentageValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="3" 
+                                   Grid.Column="2" 
+                                   x:Name="taxRatePercentageSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference taxRatePercentageValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="4" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference taxRatePercentageValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleTaxRatePercentage}}" 
+                                   FontSize="16"/>
+                            <!--/Tax Rate Percentage-->
+
+                            <!--Tax Rate Variable-->
+                            <Label Grid.Row="5"
+                                   Grid.Column="1"
+                                   Text="Porcentaje variable por producto"
+                                   FontSize="16"></Label>
+                            <Switch Grid.Row="5"
+                                    Grid.Column="1"
+                                    IsToggled="{Binding TaxRateVariable}">
+                            </Switch>
+                            <!--/Tax Rate Variable-->
+
+                            <!--Active-->
+                            <Label Grid.Row="6"
+                                   Grid.Column="1"
+                                   Text="Impuesto Activo"
+                                   FontSize="16"></Label>
+                            <Switch Grid.Row="6"
+                                    Grid.Column="1"
+                                    IsToggled="{Binding Active}">
+                            </Switch>
+                            <!--/Active-->
+
+                            <!--Printed-->
+                            <Label Grid.Row="7"
+                                   Grid.Column="1"
+                                   Text="Imprime en Ticket"
+                                   FontSize="16"></Label>
+                            <Switch Grid.Row="7"
+                                    Grid.Column="1"
+                                    IsToggled="{Binding Printed}">
+                            </Switch>
+                            <!--/Active-->
+                            <Grid Grid.Row="8"
+                                  Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"></RowDefinition>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"></ColumnDefinition>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Button Grid.Row="1" 
+                                            Grid.Column="1"
+                                            Text="Eliminar"
+                                            BackgroundColor="SteelBlue"
+                                            BorderRadius="20"
+                                            TextColor="White"
+                                            FontAttributes="Bold">
+                                    </Button>
+                                    <Button x:Name="ButtonSave"
+                                            Grid.Row="1" 
+                                            Grid.Column="2"
+                                            Text="Guardar"
+                                            BackgroundColor="SteelBlue"
+                                            BorderRadius="20"
+                                            TextColor="White"
+                                            FontAttributes="Bold"                                            
+                                            IsEnabled="False"
+                                            Command="{Binding SaveCommand}">
+                                    </Button>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

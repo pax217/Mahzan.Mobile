@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:prism="http://prismlibrary.com"
+             prism:ViewModelLocator.AutowireViewModel="True"
+             x:Class="Mahzan.Mobile.Views.Members.Sales.NewSale.NewClient.CreateClientPage"
+             Title="Nuevo Cliente">
+    <ContentPage.ToolbarItems>
+        <!--<ToolbarItem Text="Eliminar"
+                     Command="{Binding DeleteStoreCommand}">
+        </ToolbarItem>-->
+        <ToolbarItem Text="Limpiar"
+                     Command="{Binding CleanCommand}">
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <ContentPage.Content>
+        <StackLayout>
+            <ScrollView>
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <Image Source="background_client.png"
+                           Grid.Row="0"
+                           Aspect="AspectFill"
+                           HorizontalOptions="FillAndExpand"
+                           VerticalOptions="StartAndExpand">
+                    </Image>
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White" 
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
+                        <Grid RowSpacing="5">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                            </Grid.RowDefinitions>
+                            <Label Grid.Row="0"
+                                   Text="Datos del Cliente"
+                                   HorizontalTextAlignment="Center"
+                                   FontSize="18">
+                            </Label>
+                            <Entry Grid.Row="1"
+                                   Placeholder="RFC"
+                                   MaxLength="13"
+                                   Text="{Binding RFC, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="2"
+                                   Placeholder="Nombre Comercial"
+                                   Text="{Binding CommercialName, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="3"
+                                   Placeholder="Razón Social"
+                                   Text="{Binding BusinessName, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="4"
+                                   Placeholder="Email"
+                                   Keyboard="Email"
+                                   Text="{Binding Email, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="5"
+                                   Placeholder="Teléfono"
+                                   Keyboard="Telephone"
+                                   Text="{Binding Phone, Mode=TwoWay}">
+                            </Entry>
+                            <Entry Grid.Row="6"
+                                   Placeholder="Notas"
+                                   Text="{Binding Notes, Mode=TwoWay}">
+                            </Entry>
+                            <Button Grid.Row="7"
+                                    Text="Crear Cliente"
+                                    BackgroundColor="SteelBlue"
+                                    BorderRadius="20"
+                                    TextColor="White"
+                                    FontAttributes="Bold"
+                                    Command="{Binding CreateClientCommand}">
+                            </Button>
+                        </Grid>
+                    </Frame>
+                </Grid>
+            </ScrollView>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

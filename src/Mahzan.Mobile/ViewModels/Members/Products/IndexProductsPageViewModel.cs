@@ -44,7 +44,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products
                 new ProductsOptions(){ Option ="Inventario",OptionDetail="Agrega Productos, Administra tu Inventario"},
                 new ProductsOptions(){ Option ="Categorías",OptionDetail="Administra tus Categorías de Producto"},
                 new ProductsOptions(){ Option ="Unidades de Venta",OptionDetail="Administra tus Unidades de Venta"},
-                new ProductsOptions(){ Option ="Descuentos",OptionDetail="Crea descuentos para Productos"},
+                new ProductsOptions(){ Option ="Impuestos",OptionDetail="Administra los impuestos."},
+                //new ProductsOptions(){ Option ="Descuentos",OptionDetail="Crea descuentos para Productos"},
 
             };
         }
@@ -61,6 +62,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Products
                     break;
                 case "Unidades de Venta":
                     _navigationService.NavigateAsync("ListUnitsPage");
+                    break;
+                case "Impuestos":
+                    _navigationService.NavigateAsync("ListTaxesPage");
                     break;
                 default:
                     break;

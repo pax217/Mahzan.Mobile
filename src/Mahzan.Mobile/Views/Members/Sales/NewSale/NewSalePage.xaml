@@ -12,7 +12,8 @@
                      Order="Primary">
         </ToolbarItem>
         <ToolbarItem x:Name="toolbarItemAddClient"
-                     IconImageSource="icon_add_client.png">
+                     IconImageSource="icon_add_client.png"
+                     Command="{Binding CreateClientCommand}">
         </ToolbarItem>
         <ToolbarItem x:Name="toolbarItemTicketDelete"
                      IconImageSource="icon_delete.png"
@@ -40,7 +41,8 @@
                         <Grid RowSpacing="1">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="220"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="400"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Label Grid.Row="0"
@@ -48,7 +50,13 @@
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <ListView Grid.Row="1"
+                            <Picker Grid.Row="1" 
+                                    Title="- Clientes -" 
+                                    ItemsSource="{Binding ListClients}" 
+                                    ItemDisplayBinding="{Binding BusinessName}"
+                                    SelectedItem="{Binding SelectedClient, Mode=TwoWay}"
+                                    FontSize="14"/>
+                            <ListView Grid.Row="2"
                                       ItemsSource="{Binding ListViewTicketDetail}"
                                       CachingStrategy="RecycleElement"
                                       HasUnevenRows="True"
@@ -179,7 +187,7 @@
 
                                 </ListView.Footer>
                             </ListView>
-                            <Button Grid.Row="2"
+                            <Button Grid.Row="3"
                                     Text="Cobrar "
                                     BackgroundColor="SteelBlue"
                                     BorderRadius="20"
