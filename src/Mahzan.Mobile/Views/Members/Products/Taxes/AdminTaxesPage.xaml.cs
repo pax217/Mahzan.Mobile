@@ -7,6 +7,8 @@ namespace Mahzan.Mobile.Views.Members.Products.Taxes
         public AdminTaxesPage()
         {
             InitializeComponent();
+
+            ButtonSave.IsEnabled = false;
         }
 
 

@@ -11,11 +11,13 @@ namespace Mahzan.Mobile.API.Entities
 
         public string Name { get; set; }
 
-        public decimal TaxRate { get; set; }
+        public decimal TaxRateVariable { get; set; }
 
-        public TaxTypeEnum TaxType { get; set; }
+        public decimal TaxRatePercentage { get; set; }
 
-        public TaxOptionsEnum TaxOption { get; set; }
+        public bool Active { get; set; }
+
+        public bool Printed { get; set; }
 
         public Guid MembersId { get; set; }
     }

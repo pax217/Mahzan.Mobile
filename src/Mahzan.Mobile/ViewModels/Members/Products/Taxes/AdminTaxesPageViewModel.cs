@@ -22,15 +22,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
         private readonly ITaxesService _taxesService;
 
-        public AdminTaxesPageViewModel(
-            INavigationAware navigationAware,
-            IPageDialogService pageDialogService,
-            ITaxesService taxesService)
-        {
-            _navigationAware = navigationAware;
-            _pageDialogService = pageDialogService;
-            _taxesService = taxesService;
-        }
 
         private string _name;
         public string Name
@@ -69,8 +60,14 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
         public ICommand SaveCommand { get; set; }
 
-        public AdminTaxesPageViewModel() 
+        public AdminTaxesPageViewModel(
+            ITaxesService taxesService,
+            IPageDialogService pageDialogService) 
         {
+            _taxesService = taxesService;
+
+            _pageDialogService = pageDialogService;
+
             SaveCommand = new Command(async () => await OnSaveCommand());
         }
 
@@ -87,11 +84,24 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
             PostTaxesResult result = await _taxesService.Post(request);
 
-            await _pageDialogService
-                .DisplayAlertAsync(
-                result.Title,
-                result.Message,
-                "OK");
+            if (result.IsValid)
+            {
+                await _pageDialogService
+                    .DisplayAlertAsync(
+                    "Detalle de Impuesto",
+                    $"Se ha creado correctamente el impuesto {Name}.",
+                    "OK");
+            }
+            else 
+            {
+                await _pageDialogService
+                    .DisplayAlertAsync(
+                    "Detalle de Impuesto",
+                    result.Message,
+                    "OK");
+            }
+
+
 
         }
 

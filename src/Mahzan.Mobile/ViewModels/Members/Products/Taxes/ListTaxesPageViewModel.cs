@@ -1,4 +1,6 @@
-﻿using Mahzan.Mobile.API.Interfaces.Taxes;
+﻿using Mahzan.Mobile.API.Filters.Taxes;
+using Mahzan.Mobile.API.Interfaces.Taxes;
+using Mahzan.Mobile.API.Results.Taxes;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -54,7 +56,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
         private void HandleSelectedTaxes()
         {
-            throw new NotImplementedException();
+
         }
 
         public ListTaxesPageViewModel(
@@ -66,11 +68,27 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
             //Command
             AddCommand = new Command(async () => await OnAddCommand());
+
+            //Taxes
+            Task.Run(() => GetTaxes());
+        }
+
+        private async Task GetTaxes()
+        {
+            GetTaxesResult result= await _taxesService.GetWhere(new GetTaxesFilter
+            {
+
+            });
+
+            if (result.IsValid)
+            {
+                ListViewTaxes = new ObservableCollection<API.Entities.Taxes>(result.Taxes);
+            }
         }
 
         private async Task OnAddCommand()
         {
-            var errors = await _navigationService
+           await _navigationService
                   .NavigateAsync("AdminTaxesPage");
         }
 
@@ -81,7 +99,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-
+            await GetTaxes();
         }
     }
 }
