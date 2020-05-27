@@ -1,0 +1,14 @@
+﻿# Gmail
+
+# Mahzan.Mobile
+
+	cuenta:     mahzan.mobile@gmail.com
+	password:   Mahzan20%
+
+# Visual Studio
+	cuenta:		Mahzan
+	password	686990
+
+# Google Play Console
+https://play.google.com/apps/publish/?hl=es&account=5358718089794803525#AppListPlace
+

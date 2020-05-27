@@ -2,13 +2,16 @@
 using Mahzan.Mobile.API.Filters.ProductCategories;
 using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Filters.ProductUnits;
+using Mahzan.Mobile.API.Filters.Taxes;
 using Mahzan.Mobile.API.Interfaces.ProductCategories;
 using Mahzan.Mobile.API.Interfaces.Products;
 using Mahzan.Mobile.API.Interfaces.ProductUnits;
+using Mahzan.Mobile.API.Interfaces.Taxes;
 using Mahzan.Mobile.API.Requests.Products.Post;
 using Mahzan.Mobile.API.Results.ProductCategories;
 using Mahzan.Mobile.API.Results.Products;
 using Mahzan.Mobile.API.Results.ProductUnits;
+using Mahzan.Mobile.API.Results.Taxes;
 using Mahzan.Mobile.QrScanning;
 using Mahzan.Mobile.Utils.Images;
 using Plugin.Media;
@@ -30,6 +33,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 {
     public class AddProductPageViewModel : BindableBase, INavigationAware
     {
+        #region Attributes
+
         private readonly INavigationService _navigationService;
 
         private readonly IProductCategoriesService _productCategoriesService;
@@ -37,6 +42,10 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         private readonly IProductUnitsService _productUnitsService;
 
         private readonly IProductsService _productsService;
+
+        private readonly ITaxesService _taxesService;
+
+        #endregion region 
 
         #region Properties
 
@@ -86,8 +95,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         }
 
         //Price
-        private decimal _price;
-        public decimal Price
+        private decimal? _price;
+        public decimal? Price
         {
             get => _price;
             set => SetProperty(ref _price, value);
@@ -102,7 +111,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             set => SetProperty(ref _cost, value);
         }
 
-        //Pickers
+        //Categories
         private ObservableCollection<ProductCategories> _productCategories;
         public ObservableCollection<ProductCategories> ProductCategories
         {
@@ -110,12 +119,22 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             set => SetProperty(ref _productCategories, value);
         }
 
+        //Product Units
         private ObservableCollection<ProductUnits> _productUnits;
         public ObservableCollection<ProductUnits> ProductUnits
         {
             get => _productUnits;
             set => SetProperty(ref _productUnits, value);
         }
+
+        //Taxes
+        private ObservableCollection<API.Entities.Taxes> _taxes;
+        public ObservableCollection<API.Entities.Taxes> Taxes
+        {
+            get => _taxes;
+            set => SetProperty(ref _taxes, value);
+        }
+
 
         //Selected ProductUnitCategory
         private ProductCategories _selectedProductCategory;
@@ -173,7 +192,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             INavigationService navigationService,
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
-            IProductsService productsService)
+            IProductsService productsService, 
+            ITaxesService taxesService)
         {
             _navigationService = navigationService;
 
@@ -181,10 +201,14 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             _productCategoriesService = productCategoriesService;
             _productUnitsService = productUnitsService;
             _productsService = productsService;
+            _taxesService = taxesService;
 
             //Pickers
             Task.Run(() => GetProductCategories());
             Task.Run(() => GetProductUnits());
+
+            //List
+            Task.Run(() => GetTaxes());
 
             //Commands
             OpenCameraCommand = new Command(async () => await OnOpenCameraCommand());
@@ -193,6 +217,19 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
             //Initialize
             Initialize();
+
+        }
+
+        private async Task GetTaxes()
+        {
+            GetTaxesResult result = await _taxesService.GetWhere(new GetTaxesFilter { 
+
+            });
+
+            if (result.IsValid)
+            {
+                Taxes = new ObservableCollection<API.Entities.Taxes>(result.Taxes);
+            }
         }
 
         #region Private Methods
@@ -213,11 +250,27 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     SKU = SKU,
                     Barcode = BarCode,
                     Description = Description,
-                    Price = Price,
+                    Price = Price.Value,
                     Cost = Cost,
                     FollowInventory = SwitchFollowInventory
                 }
             };
+
+            //Taxes
+            if (Taxes.Where(x=> x.Active).ToList().Count>0)
+            {
+                postProductsRequest.PostProductTaxesRequest = new List<PostProductTaxesRequest>(); 
+
+                foreach (var tax in Taxes.Where(x => x.Active))
+                {
+                    postProductsRequest
+                        .PostProductTaxesRequest
+                        .Add(new PostProductTaxesRequest {
+                        TaxRate = tax.TaxRatePercentage,
+                        TaxesId = tax.TaxesId
+                        });
+                }
+            }
 
             if (ProductsId == Guid.Empty)
             {

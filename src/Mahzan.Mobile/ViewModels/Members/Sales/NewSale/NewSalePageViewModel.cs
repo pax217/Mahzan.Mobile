@@ -149,6 +149,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
             
 
             ListViewTicketDetail = new ObservableCollection<ListViewTicketDetail>();
+            TotalProducts = "";
 
             Task.Run(() => Initialize());
             Task.Run(() => GetClients());
@@ -216,6 +217,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
 
                     ListViewTicketDetail.Clear();
+                    ListTicketDetail.Clear();
 
                     Device.BeginInvokeOnMainThread(() => {
                         Total = "";

@@ -9,5 +9,7 @@ namespace Mahzan.Mobile.API.Requests.Products.Post
         public PostProductPhotoRequest PostProductPhotoRequest { get; set; }
 
         public PostProductDetailRequest PostProductDetailRequest { get; set; }
+
+        public List<PostProductTaxesRequest> PostProductTaxesRequest { get; set; }
     }
 }
