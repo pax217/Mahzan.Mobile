@@ -5,9 +5,8 @@ using System.Text;
 
 namespace Mahzan.Mobile.API.Results.Products
 {
-    public class PostProductsResult:Result
+    public class CreateProductResult:Result
     {
-
-        public Entities.Products Product { get; set; }
+        public Guid ProductsId { get; set; }
     }
 }

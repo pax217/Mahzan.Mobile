@@ -1,4 +1,5 @@
-﻿using Mahzan.Mobile.API.Entities;
+﻿using Mahzan.Mobile.API.Commands.Products.CreateProduct;
+using Mahzan.Mobile.API.Entities;
 using Mahzan.Mobile.API.Filters.ProductCategories;
 using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Filters.ProductUnits;
@@ -19,6 +20,7 @@ using Plugin.Media.Abstractions;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
+using Prism.Services;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -36,6 +38,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         #region Attributes
 
         private readonly INavigationService _navigationService;
+
+        private readonly IPageDialogService _pageDialogService;
 
         private readonly IProductCategoriesService _productCategoriesService;
 
@@ -190,12 +194,14 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         public AddProductPageViewModel(
             INavigationService navigationService,
+            IPageDialogService pageDialogService,
             IProductCategoriesService productCategoriesService,
             IProductUnitsService productUnitsService,
             IProductsService productsService, 
             ITaxesService taxesService)
         {
             _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
 
             //Service
             _productCategoriesService = productCategoriesService;
@@ -235,15 +241,9 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         #region Private Methods
         private async Task OnCreateProductCommand()
         {
-            PostProductsRequest postProductsRequest = new PostProductsRequest
+            CreateProductCommand command = new CreateProductCommand
             {
-                PostProductPhotoRequest = new PostProductPhotoRequest
-                {
-                    Title = Path.GetFileNameWithoutExtension(PathImageProduct).Replace("_", ""),
-                    MIMEType = ImagesUtil.GetMIMEType(Path.GetExtension(PathImageProduct)),
-                    Base64 = ImagesUtil.ConvertImageBase64(PathImageProduct)
-                },
-                PostProductDetailRequest = new PostProductDetailRequest
+                CreateProductDetailCommand = new CreateProductDetailCommand
                 {
                     ProductCategoriesId = _selectedProductCategory.ProductCategoriesId,
                     ProductUnitsId = _selectedProductUnit.ProductUnitsId,
@@ -253,19 +253,26 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     Price = Price.Value,
                     Cost = Cost,
                     FollowInventory = SwitchFollowInventory
-                }
+                },
+                CreateProductPhotoCommand = new CreateProductPhotoCommand
+                {
+                    Title = Path.GetFileNameWithoutExtension(PathImageProduct).Replace("_", ""),
+                    MIMEType = ImagesUtil.GetMIMEType(Path.GetExtension(PathImageProduct)),
+                    Base64 = ImagesUtil.ConvertImageBase64(PathImageProduct)
+                },
             };
 
             //Taxes
             if (Taxes.Where(x=> x.Active).ToList().Count>0)
             {
-                postProductsRequest.PostProductTaxesRequest = new List<PostProductTaxesRequest>(); 
+                command.CreateProductTaxesCommand = new List<CreateProductTaxesCommand>(); 
 
                 foreach (var tax in Taxes.Where(x => x.Active))
                 {
-                    postProductsRequest
-                        .PostProductTaxesRequest
-                        .Add(new PostProductTaxesRequest {
+                    command
+                        .CreateProductTaxesCommand
+                        .Add(new CreateProductTaxesCommand
+                        {
                         TaxRate = tax.TaxRatePercentage,
                         TaxesId = tax.TaxesId
                         });
@@ -275,40 +282,37 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
             if (ProductsId == Guid.Empty)
             {
                 //Insert
-                PostProductsResult postProductsResult;
-                postProductsResult = await _productsService
-                                           .Post(postProductsRequest);
+                CreateProductResult createProductResult;
+                createProductResult = await _productsService
+                                           .CreateProduct(command);
 
-                if (postProductsResult.IsValid)
+                if (createProductResult.IsValid)
                 {
                     //Si el producto se sigue en el inventario
                     if (SwitchFollowInventory)
                     {
                         var navigationParams = new NavigationParameters();
-                        navigationParams.Add("productsId", postProductsResult.Product.ProductsId);
+                        navigationParams.Add("productsId", createProductResult.ProductsId);
 
                         await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
 
                     }
                     else 
                     {
-                        await Application
-                            .Current
-                            .MainPage
-                            .DisplayAlert(postProductsResult.Title,
-                                          postProductsResult.Message,
-                                          "ok");
-                    
+                        await _pageDialogService
+                            .DisplayAlertAsync(
+                            createProductResult.Title,
+                            createProductResult.Message,
+                            "Ok");
                     }
                 }
                 else
                 {
-                    await Application
-                    .Current
-                    .MainPage
-                    .DisplayAlert(postProductsResult.Title,
-                                  postProductsResult.Message,
-                                  "ok");
+                    await _pageDialogService
+                        .DisplayAlertAsync(
+                        createProductResult.Title,
+                        createProductResult.Message,
+                        "Ok");
                 }
             }
             else 
@@ -360,7 +364,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private async Task OnOpenBarCodeCommand()
         {
-            var scanner = DependencyService.Get<IQrScanningService>();
+            var scanner = Xamarin.Forms.DependencyService.Get<IQrScanningService>();
             var result = await scanner.ScanAsync();
 
             if (result != null)

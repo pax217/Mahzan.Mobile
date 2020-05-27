@@ -1,4 +1,5 @@
-﻿using Mahzan.Mobile.API.Filters.Products;
+﻿using Mahzan.Mobile.API.Commands.Products.CreateProduct;
+using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Requests.Products.Post;
 using Mahzan.Mobile.API.Results.Products;
 using System;
@@ -12,6 +13,6 @@ namespace Mahzan.Mobile.API.Interfaces.Products
     {
         Task<GetProductsResult> Get(GetProductsFilter getProductsFilter);
 
-        Task<PostProductsResult> Post(PostProductsRequest postProductsRequest);
+        Task<CreateProductResult> CreateProduct(CreateProductCommand command);
     }
 }

@@ -1,4 +1,5 @@
-﻿using Mahzan.Mobile.API.Enums.Results;
+﻿using Mahzan.Mobile.API.Commands.Products.CreateProduct;
+using Mahzan.Mobile.API.Enums.Results;
 using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Implementations._Base;
 using Mahzan.Mobile.API.Interfaces.Products;
@@ -57,15 +58,15 @@ namespace Mahzan.Mobile.API.Implementations.Products
             return result;
         }
 
-        public async Task<PostProductsResult> Post(PostProductsRequest postProductsRequest)
+        public async Task<CreateProductResult> CreateProduct(CreateProductCommand command)
         {
-            PostProductsResult result = new PostProductsResult();
-            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Products");
+            CreateProductResult result = new CreateProductResult();
+            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Products/create");
             try
             {
                 HttpClient httpClient = new HttpClient();
 
-                string jsonData = JsonConvert.SerializeObject(postProductsRequest);
+                string jsonData = JsonConvert.SerializeObject(command);
                 StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
@@ -74,7 +75,7 @@ namespace Mahzan.Mobile.API.Implementations.Products
 
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<PostProductsResult>(respuesta);
+                result = JsonConvert.DeserializeObject<CreateProductResult>(respuesta);
             }
             catch (Exception ex)
             {

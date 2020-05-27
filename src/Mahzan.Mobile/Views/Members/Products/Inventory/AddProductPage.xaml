@@ -320,6 +320,7 @@
                                    FontSize="20"
                                    FontAttributes="Bold">
                             </Label>
+                            
                             <!--/FollowInventory-->
                             <Label Grid.Row="15"
                                    Grid.Column="1"
@@ -329,8 +330,10 @@
                             </Label>
                             <Switch Grid.Row="15"
                                     Grid.Column="1"
-                                    IsToggled="{Binding SwitchFollowInventory}"></Switch>-->
+                                    IsToggled="{Binding SwitchFollowInventory}">
+                            </Switch>
                             <!--/FollowInventory-->
+                            
                             <Button Grid.Row="16"
                                     Grid.ColumnSpan="3"
                                     Text="Agregar"
