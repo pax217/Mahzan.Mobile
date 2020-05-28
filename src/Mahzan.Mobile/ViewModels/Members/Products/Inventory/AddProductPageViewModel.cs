@@ -293,7 +293,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
                     {
                         var navigationParams = new NavigationParameters();
                         navigationParams.Add("productsId", createProductResult.ProductsId);
-
                         await _navigationService.NavigateAsync("AddProductInventoryPage", navigationParams);
 
                     }

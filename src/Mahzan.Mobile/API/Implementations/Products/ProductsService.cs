@@ -34,7 +34,18 @@ namespace Mahzan.Mobile.API.Implementations.Products
             try
             {
                 var query = HttpUtility.ParseQueryString(uriBuilder.Query);
-                query["Barcode"] = getProductsFilter.Barcode;
+
+                if (getProductsFilter.ProductsId != null)
+                {
+                    query["ProductsId"] = getProductsFilter.ProductsId.ToString();
+                }
+
+                if (getProductsFilter.Barcode!=null)
+                {
+                    query["Barcode"] = getProductsFilter.Barcode;
+                }
+
+
                 uriBuilder.Query = query.ToString();
 
                 HttpClient httpClient = new HttpClient();

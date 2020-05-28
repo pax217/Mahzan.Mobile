@@ -8,5 +8,23 @@ namespace Mahzan.Mobile.Views.Members.Products.Inventory
         {
             InitializeComponent();
         }
+
+        private void SwitchInAllStores_Toggled(object sender, ToggledEventArgs e)
+        {
+
+            Switch sw = sender as Switch;
+            if (sw.IsToggled)
+            {
+                PickerStores.IsEnabled = false;
+                EntryPrice.IsEnabled = false;
+                EntryCost.IsEnabled = false;
+            }
+            else 
+            {
+                PickerStores.IsEnabled = true;
+                EntryPrice.IsEnabled = true;
+                EntryCost.IsEnabled = true;
+            }
+        }
     }
 }

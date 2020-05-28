@@ -20,7 +20,7 @@ namespace Mahzan.Mobile.API.Entities
 
         public bool FollowInventory { get; set; }
 
-        public bool AvailableInAllStores { get; set; }
+        public bool? AvailableInAllStores { get; set; }
         public ProductsPhotos ProductsPhotos { get; set; }
 
         public Guid ProductCategoriesId { get; set; }

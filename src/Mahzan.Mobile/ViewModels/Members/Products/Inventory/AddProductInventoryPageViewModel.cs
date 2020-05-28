@@ -1,8 +1,11 @@
 ﻿using Mahzan.Mobile.API.Entities;
+using Mahzan.Mobile.API.Filters.Products;
 using Mahzan.Mobile.API.Filters.Stores;
+using Mahzan.Mobile.API.Interfaces.Products;
 using Mahzan.Mobile.API.Interfaces.ProductsStore;
 using Mahzan.Mobile.API.Interfaces.Stores;
 using Mahzan.Mobile.API.Requests.ProductsStore;
+using Mahzan.Mobile.API.Results.Products;
 using Mahzan.Mobile.API.Results.ProductsStore;
 using Mahzan.Mobile.API.Results.Stores;
 using Prism.Commands;
@@ -21,18 +24,34 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
     public class AddProductInventoryPageViewModel : BindableBase, INavigationAware
     {
         private readonly INavigationService _navigationService;
-        //Services
+
         private readonly IStoresService _storesService;
 
         private readonly IProductsStoreService _productsStoreService;
 
+        private readonly IProductsService _productsService;
+
+        public bool InAllStores { get; set; }
+
         //Stock
         private Guid? ProductsId { get; set; }
-        public decimal InStock { get; set; }
-        public decimal LowStock { get; set; }
-        public decimal OptimumStock { get; set; }
-        public decimal Price { get; set; }
-        public decimal Cost { get; set; }
+        public decimal? InStock { get; set; }
+        public decimal? LowStock { get; set; }
+        public decimal? OptimumStock { get; set; }
+
+        private decimal? _price;
+        public decimal? Price
+        {
+            get { return _price; }
+            set { SetProperty(ref _price, value); }
+        }
+
+        private decimal? _cost;
+        public decimal? Cost
+        {
+            get { return _cost; }
+            set { SetProperty(ref _cost, value); }
+        }
 
         private string _totalProducts { get; set; }
         public string TotalProducts
@@ -87,17 +106,18 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
         public ICommand AddProductInventoryCommand { get; private set; }
         public ICommand AddInventoryCommand { get; private set; }
         public ICommand ButtonEraseCommand { get; private set; }
-        
+
 
         public AddProductInventoryPageViewModel(
             INavigationService navigationService,
             IStoresService storesService,
-            IProductsStoreService productsStoreService)
+            IProductsStoreService productsStoreService, 
+            IProductsService productsService)
         {
             _navigationService = navigationService;
-            //Services
             _storesService = storesService;
             _productsStoreService = productsStoreService;
+            _productsService = productsService;
 
             //Pickers
             Task.Run(() => GetStores());
@@ -129,7 +149,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private async Task OnAddInventoryCommand()
         {
-            //List<Products_Store> products_Stores = _products_StoreSqlite.Get();
             PostProductsStoreRequest request = new PostProductsStoreRequest { };
             request.ProductsStoreRequest = new List<ProductsStoreRequest>();
 
@@ -185,6 +204,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private async void InsertProductStores()
         {
+
             Products_Store existProductsStore = (from ps in ListProductStores
                                                  where ps.ProductsId == ProductsId
                                                  && ps.StoresId == _selectedStores.StoresId
@@ -193,16 +213,37 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
             if (existProductsStore == null)
             {
-                ListProductStores.Add(new Products_Store
+
+                if (InAllStores)
                 {
-                    ProductsId = ProductsId.Value,
-                    StoresId = _selectedStores.StoresId,
-                    InStock = InStock,
-                    LowStock = LowStock,
-                    OptimumStock = OptimumStock,
-                    Price = Price,
-                    Cost = Cost,
-                });
+                    foreach (var store in Stores)
+                    {
+                        ListProductStores.Add(new Products_Store
+                        {
+                            ProductsId = ProductsId.Value,
+                            StoresId = store.StoresId,
+                            InStock = InStock,
+                            LowStock = LowStock,
+                            OptimumStock = OptimumStock,
+                            Price = Price.Value,
+                            Cost = Cost,
+                        });
+                    };
+                }
+                else 
+                {
+                    ListProductStores.Add(new Products_Store
+                    {
+                        ProductsId = ProductsId.Value,
+                        StoresId = _selectedStores.StoresId,
+                        InStock = InStock,
+                        LowStock = LowStock,
+                        OptimumStock = OptimumStock,
+                        Price = Price.Value,
+                        Cost = Cost,
+                    });
+                }
+
             }
             else
             {
@@ -256,7 +297,16 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
             if (ProductsId != Guid.Empty)
             {
+                GetProductsResult result = await _productsService.Get(new GetProductsFilter
+                {
+                    ProductsId = ProductsId.Value
+                });
 
+                if (result.IsValid)
+                {
+                    Price = result.Products.FirstOrDefault().Price;
+                    Cost = result.Products.FirstOrDefault().Cost;
+                }
             }
         }
 

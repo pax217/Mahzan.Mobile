@@ -1,10 +1,138 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:prism="http://prismlibrary.com" xmlns:helper="clr-namespace:Mahzan.Mobile.Helpers.MaskBehaivior"
+             xmlns:prism="http://prismlibrary.com" 
+             xmlns:local="clr-namespace:Mahzan.Mobile.Behaviors"
              prism:ViewModelLocator.AutowireViewModel="True"
              x:Class="Mahzan.Mobile.Views.Members.Products.Inventory.AddProductInventoryPage"
              Title="Producto en Tiendas">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:BooleanToObjectConverter x:Key="boolToStyleImage"
+                                              x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.error.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Image">
+                        <Setter Property="HeightRequest" Value="20" />
+                        <Setter Property="Source" Value="{local:ImageResource Mahzan.Mobile.Images.success.png}" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+
+            <Style x:Key="baseStyle"
+             TargetType="Label">
+                <Setter Property="XAlign" Value="Start" />
+                <Setter Property="YAlign" Value="Center" />
+                <Setter Property="FontSize" Value="Micro" />
+                <Setter Property="FontAttributes" Value="Italic" />
+            </Style>
+
+            <!--InStock-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleInStock"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa una cantidad válida" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/InStock-->
+
+            <!--LowStock-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleLowStock"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa una cantidad válida" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/LowStock-->
+
+
+            <!--OptimumStock-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleOptimumStock"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa una cantidad válida" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/OptimumStock-->
+            
+            <!--Price-->
+            <local:BooleanToObjectConverter x:Key="boolToStylePrice"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un precio válido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Price-->
+
+            <!--Cost-->
+            <local:BooleanToObjectConverter x:Key="boolToStyleCost"
+                                           x:TypeArguments="Style">
+                <local:BooleanToObjectConverter.FalseObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#F44336" />
+                        <Setter Property="Text" Value="Ingresa un costo válido" />
+                    </Style>
+                </local:BooleanToObjectConverter.FalseObject>
+
+                <local:BooleanToObjectConverter.TrueObject>
+                    <Style TargetType="Label" BasedOn="{StaticResource baseStyle}">
+                        <Setter Property="TextColor" Value="#4CAF50" />
+                        <Setter Property="Text" Value="Correcto" />
+                    </Style>
+                </local:BooleanToObjectConverter.TrueObject>
+            </local:BooleanToObjectConverter>
+            <!--/Cost-->
+
+            
+
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <ContentPage.ToolbarItems>
 
         <ToolbarItem x:Name="toolbarItemTicketDelete"
@@ -18,7 +146,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <Image Source="stores_inventory_background.png"
                            Grid.Row="0"
@@ -26,10 +154,10 @@
                            HorizontalOptions="FillAndExpand"
                            VerticalOptions="StartAndExpand">
                     </Image>
-                    <Frame Grid.Row="0" 
-                           CornerRadius="30" 
-                           BackgroundColor="White" 
-                           Margin="20,150,20,0">
+                    <Frame CornerRadius="10" 
+                           BackgroundColor="White"
+                           Grid.RowSpan="2" 
+                           Margin="20,150,20,20">
                         <Grid RowSpacing="5">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto"></RowDefinition>
@@ -42,131 +170,196 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="200"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="20" />
+                            </Grid.ColumnDefinitions>
+
                             <Label Grid.Row="0"
+                                   Grid.ColumnSpan="3"
                                    Text="Inventario de Producto"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <Grid Grid.Row="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                       Text="En Todas las Tiendas">
-                                </Label>
-                                <Switch Grid.Column="1"
-                                    IsToggled="false"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="CenterAndExpand"
-                                    />
-                            </Grid>
-                            <Grid Grid.Row="2">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                       Text="Inventario">
-                                </Label>
-                                <Switch Grid.Column="1"
-                                    IsToggled="false"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="CenterAndExpand"
-                                    />
-                            </Grid>
-                            <Grid Grid.Row="3">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto"/>
-                                    <ColumnDefinition Width="Auto"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Grid.Column="0"
-                                       Text="Mismo Precio">
-                                </Label>
-                                <Switch Grid.Column="1"
-                                    IsToggled="false"
-                                    HorizontalOptions="Center"
-                                    VerticalOptions="CenterAndExpand"
-                                    />
-                            </Grid>
+                            <!--InAllStores-->
+                            <Label Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="En todas las tiendas"
+                                   FontSize="16"
+                                   >
+                            </Label>
+                            <Switch Grid.Row="1"
+                                    Grid.Column="1"
+                                    x:Name="SwitchInAllStores"
+                                    IsToggled="{Binding InAllStores}"
+                                    Toggled="SwitchInAllStores_Toggled">
+                            </Switch>
+                            <!--/InAllStores-->
 
-                            <Picker Grid.Row="4" 
+                            <!--Stores-->
+                            <Picker Grid.Row="2"
+                                    x:Name="PickerStores"
                                     Title="- Tiendas -" 
+                                    Grid.ColumnSpan="3"
                                     ItemsSource="{Binding Stores}" 
                                     ItemDisplayBinding="{Binding Name}"
                                     SelectedItem="{Binding SelectedStores}"/>
-                            <Entry Grid.Row="5"
+                            <!--/Stores-->
+
+                            <!--InStock-->
+                            <Entry Grid.Row="3"
+                                   Grid.Column="1"
+                                   x:Name="EntryInStock"
                                    Placeholder="Stock"
                                    Keyboard="Numeric"
                                    Text="{Binding InStock}">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="inStockValidator"/>
+                                </Entry.Behaviors>
                             </Entry>
-                            <Entry Grid.Row="6"
+                            <Image Grid.Row="3" 
+                                   Grid.Column="2" 
+                                   x:Name="inStockSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference inStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="4" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference inStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleInStock}}" 
+                                   FontSize="16"/>
+                            <!--/InStock-->
+
+                            <!--LowStock-->
+                            <Entry Grid.Row="5"
+                                   Grid.Column="1"
+                                   x:Name="EntryLowStock"
                                    Placeholder="Stock Bajo"
                                    Keyboard="Numeric"
                                    Text="{Binding LowStock}">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="lowStockValidator"/>
+                                </Entry.Behaviors>
                             </Entry>
+                            <Image Grid.Row="5" 
+                                   Grid.Column="2" 
+                                   x:Name="lowStockSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference lowStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="6" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference lowStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleLowStock}}" 
+                                   FontSize="16"/>
+                            <!--/LowStock-->
+
+                            <!--OptimumStock-->
                             <Entry Grid.Row="7"
+                                   Grid.Column="1"
+                                   x:Name="EntryOptimumStock"
                                    Placeholder="Stock Optimo"
                                    Keyboard="Numeric"
                                    Text="{Binding OptimumStock}">
-                            </Entry>
-                            <Entry Grid.Row="8"  
-                                   Keyboard="Numeric"
-                                   Placeholder="Precio"
-                                   Text="{Binding Price}">
                                 <Entry.Behaviors>
-                                    <helper:MaskBehaviorEntry MaxLength="10" 
-                                                              MaskType="Decimal"
-                                                              />
+                                    <local:DecimalValidatorBehavior x:Name="optimumStockValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
+                            <Image Grid.Row="7" 
+                                   Grid.Column="2" 
+                                   x:Name="optimumStockSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference optimumStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="8" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference optimumStockValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleOptimumStock}}" 
+                                   FontSize="16"/>
+                            <!--/OptimumStock-->
 
-                            <Entry  Grid.Row="9" 
+                            <!--Price-->
+                            <Entry Grid.Row="9"  
+                                   Grid.Column="1"
+                                   x:Name="EntryPrice"
+                                   Keyboard="Numeric"
+                                   Placeholder="Precio"
+                                   Text="{Binding Price,Mode=TwoWay}">
+                                <Entry.Behaviors>
+                                    <local:DecimalValidatorBehavior x:Name="priceValidator"/>
+                                </Entry.Behaviors>
+                            </Entry>
+                            <Image Grid.Row="9" 
+                                   Grid.Column="2" 
+                                   x:Name="priceSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference priceValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="10" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference priceValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStylePrice}}" 
+                                   FontSize="16"/>
+                            <!--/Price-->
+
+                            <!--Cost-->
+                            <Entry  Grid.Row="11" 
+                                    Grid.Column="1"
+                                    x:Name="EntryCost"
                                     Keyboard="Numeric"
                                     Placeholder="Costo"
                                     MaxLength="10"
-                                    Text="{Binding Cost}">
+                                    Text="{Binding Cost,Mode=TwoWay}">
                                 <Entry.Behaviors>
-                                    <helper:MaskBehaviorEntry MaxLength="10" 
-                                                              MaskType="Decimal"
-                                                              />
+                                    <local:DecimalValidatorBehavior x:Name="costValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Button Grid.Row="10"
+                            <Image Grid.Row="11" 
+                                   Grid.Column="2" 
+                                   x:Name="costSuccessErrorImage"
+                                   Style="{Binding Source={x:Reference costValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleImage}}"/>
+                            <Label Grid.Row="12" 
+                                   Grid.Column="1" 
+                                   Style="{Binding Source={x:Reference costValidator}, 
+                                   Path=IsValid, 
+                                   Converter={StaticResource boolToStyleCost}}" 
+                                   FontSize="16"/>
+                            <!--/Cost-->
+
+                            <Button Grid.Row="13"
+                                    Grid.ColumnSpan="3"
                                     Text="Agregar a Inventario"
                                     BackgroundColor="#146AB0"
                                     CornerRadius="3"
                                     TextColor="White"
                                     Command="{Binding AddProductInventoryCommand}">
                             </Button>
-                        </Grid>
-                    </Frame>
-                    <Frame Grid.Row="1" 
-                           CornerRadius="30" 
-                           BackgroundColor="White" 
-                           Margin="20,20,20,20">
-                        <Grid RowSpacing="11">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                                <RowDefinition Height="200"></RowDefinition>
-                                <RowDefinition Height="Auto"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Label Grid.Row="0"
+
+                            <!--Stock en Tiendas-->
+                            <Label Grid.Row="14"
+                                   Grid.ColumnSpan="3"
                                    Text="Stock en Tiendas"
+                                   FontAttributes="Bold"
                                    HorizontalTextAlignment="Center"
                                    FontSize="18">
                             </Label>
-                            <ListView Grid.Row="1"
+                            <ListView Grid.Row="15"
+                                      Grid.ColumnSpan="3"
                                       ItemsSource="{Binding ListViewInventory}"
                                       CachingStrategy="RecycleElement"
                                       HasUnevenRows="True"
@@ -282,17 +475,20 @@
 
                                 </ListView.Footer>
                             </ListView>
-
-                            <Button Grid.Row="2"
+                            <Button Grid.Row="16"
+                                    Grid.ColumnSpan="3"
                                     Text="Agregar a Almacén"
                                     BackgroundColor="#146AB0"
                                     CornerRadius="3"
                                     TextColor="White"
                                     Command="{Binding AddInventoryCommand}">
                             </Button>
+                            <!--/Stock en Tiendas-->
                         </Grid>
                     </Frame>
                 </Grid>
+                
+                
             </ScrollView>
         </StackLayout>
     </ContentPage.Content>
