@@ -149,6 +149,22 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private async Task OnAddInventoryCommand()
         {
+            if (ListProductStores == null)
+            {
+                await Application
+                      .Current
+                      .MainPage
+                      .DisplayAlert(
+                        "Agregar a Inventario",
+                        "Debes agregar el producto al inventario",
+                        "ok");
+
+                return;
+            }
+
+
+
+
             PostProductsStoreRequest request = new PostProductsStoreRequest { };
             request.ProductsStoreRequest = new List<ProductsStoreRequest>();
 
@@ -176,6 +192,20 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Inventory
 
         private async Task OnAddProductInventoryCommand()
         {
+
+            if (InStock == null || InStock == 0)
+            {
+                await Application
+                      .Current
+                      .MainPage
+                      .DisplayAlert(
+                        "Agregar a Almacén",
+                        "Debes indicar el Stock",
+                        "ok");
+
+                return;
+            }
+
             InsertProductStores();
             UpdateInventory();
         }
