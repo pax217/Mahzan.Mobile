@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Mahzan.Mobile.API.Results.Taxes
 {
-    public class PostTaxesResult:Result
+    public class CreateTaxResult:Result
     {
         public Guid TaxesId { get; set; }
     }

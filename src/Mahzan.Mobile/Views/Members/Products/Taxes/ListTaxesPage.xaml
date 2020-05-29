@@ -43,7 +43,8 @@
                                       SelectedItem="{Binding SelectedTaxes, Mode=TwoWay}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <TextCell Text="{Binding Name}">
+                                        <TextCell Detail="{Binding TaxRatePercentage}"
+                                                  Text="{Binding Name}">
                                         </TextCell>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>

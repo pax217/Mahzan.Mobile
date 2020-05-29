@@ -12,6 +12,6 @@ namespace Mahzan.Mobile.API.Interfaces.Taxes
     {
         Task<GetTaxesResult> GetWhere(GetTaxesFilter filter);
 
-        Task<PostTaxesResult> Post(PostTaxesRequest request);
+        Task<CreateTaxResult> CreateTax(CreateTaxCommand command);
     }
 }

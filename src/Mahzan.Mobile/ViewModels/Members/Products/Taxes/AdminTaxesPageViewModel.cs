@@ -1,4 +1,5 @@
-﻿using Mahzan.Mobile.API.Interfaces.Taxes;
+﻿using Mahzan.Mobile.API.Enums.Taxes;
+using Mahzan.Mobile.API.Interfaces.Taxes;
 using Mahzan.Mobile.API.Requests.Taxes;
 using Mahzan.Mobile.API.Results.Taxes;
 using Prism.Commands;
@@ -21,6 +22,13 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
         private readonly IPageDialogService _pageDialogService;
 
         private readonly ITaxesService _taxesService;
+
+        private string _typeTax;
+        public string TypeTax
+        {
+            get { return _typeTax; }
+            set { SetProperty(ref _typeTax, value); }
+        }
 
 
         private string _name;
@@ -73,7 +81,7 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
 
         private async Task OnSaveCommand()
         {
-            PostTaxesRequest request = new PostTaxesRequest
+            CreateTaxCommand command = new CreateTaxCommand
             {
                 Name = Name,
                 TaxRatePercentage = TaxRatePercentage.Value,
@@ -82,27 +90,35 @@ namespace Mahzan.Mobile.ViewModels.Members.Products.Taxes
                 Printed = Printed
             };
 
-            PostTaxesResult result = await _taxesService.Post(request);
-
-            if (result.IsValid)
+            if (TypeTax == "" || TypeTax == null)
             {
                 await _pageDialogService
                     .DisplayAlertAsync(
-                    "Detalle de Impuesto",
-                    $"Se ha creado correctamente el impuesto {Name}.",
+                    "Crea Impuesto",
+                    "Debes seleccionar el tipo de impuesto",
                     "OK");
+                return;
             }
             else 
             {
-                await _pageDialogService
-                    .DisplayAlertAsync(
-                    "Detalle de Impuesto",
-                    result.Message,
-                    "OK");
+                if (TypeTax == "Incluido en el precio")
+                {
+                    command.Type = TaxTypeEnum.INCLUDED_IN_PRICE;
+                }
+
+                if (TypeTax == "Añadir al precio")
+                {
+                    command.Type = TaxTypeEnum.ADD_TO_PRICE;
+                }
             }
 
+            CreateTaxResult result = await _taxesService.CreateTax(command);
 
-
+            await _pageDialogService
+                .DisplayAlertAsync(
+                result.Title,
+                result.Message,
+                "OK");
         }
 
         public async void OnNavigatedFrom(INavigationParameters parameters)

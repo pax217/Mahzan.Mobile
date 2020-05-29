@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Mahzan.Mobile.API.Enums.Taxes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Mahzan.Mobile.API.Requests.Taxes
 {
-    public class PostTaxesRequest
+    public class CreateTaxCommand
     {
         public string Name { get; set; }
+
+        public TaxTypeEnum Type { get; set; }
 
         public bool TaxRateVariable { get; set; }
 

@@ -56,15 +56,15 @@ namespace Mahzan.Mobile.API.Implementations.Taxes
             return result;
         }
 
-        public async Task<PostTaxesResult> Post(PostTaxesRequest request)
+        public async Task<CreateTaxResult> CreateTax(CreateTaxCommand command)
         {
-            PostTaxesResult result = new PostTaxesResult();
-            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Taxes");
+            CreateTaxResult result = new CreateTaxResult();
+            UriBuilder uriBuilder = new UriBuilder(URL_API + "/v1/Taxes/create");
             try
             {
                 HttpClient httpClient = new HttpClient();
 
-                string jsonData = JsonConvert.SerializeObject(request);
+                string jsonData = JsonConvert.SerializeObject(command);
                 StringContent stringContent = new StringContent(jsonData, UnicodeEncoding.UTF8, "application/json");
 
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
@@ -73,7 +73,7 @@ namespace Mahzan.Mobile.API.Implementations.Taxes
 
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 
-                result = JsonConvert.DeserializeObject<PostTaxesResult>(respuesta);
+                result = JsonConvert.DeserializeObject<CreateTaxResult>(respuesta);
             }
             catch (Exception ex)
             {

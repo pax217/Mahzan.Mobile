@@ -32,6 +32,10 @@
                 <Setter Property="FontSize" Value="Micro" />
                 <Setter Property="FontAttributes" Value="Italic" />
             </Style>
+            
+            <!--Type-->
+            <local:PickerTaxConverter x:Key="pickerTaxConverter" />
+            <!--/Type-->
 
             <!--Name Style-->
             <local:BooleanToObjectConverter x:Key="boolToStyleName"
@@ -70,6 +74,8 @@
                 </local:BooleanToObjectConverter.TrueObject>
             </local:BooleanToObjectConverter>
             <!--/Tax Rate Percentage-->
+            
+            
 
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -102,6 +108,9 @@
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
                                 <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
+                                <RowDefinition Height="Auto"></RowDefinition>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="Auto" />
@@ -115,10 +124,33 @@
                                    FontSize="18">
                             </Label>
 
+                            <!--Type-->
+                            <Picker Grid.Row="1"
+                                    Grid.Column="1"
+                                    Title="Tipo de Impuesto"
+                                    SelectedItem="{Binding TypeTax}">
+                                <Picker.ItemsSource>
+                                    <x:Array Type="{x:Type x:String}">
+                                        <x:String></x:String>
+                                        <x:String>Incluido en el precio</x:String>
+                                        <x:String>Añadir al precio</x:String>
+                                    </x:Array>
+                                </Picker.ItemsSource>
+                                <Picker.Behaviors>
+                                    <local:PickerBehavior x:Name="pickerTypeBehavior" />
+                                </Picker.Behaviors>
+                            </Picker>
+                            <Label Grid.Row="2" 
+                                   Grid.Column="1"
+                                   TextColor="#4CAF50" 
+                                   Text="{Binding Source={x:Reference pickerTypeBehavior}, Path=SelectedItem, Converter={StaticResource pickerTaxConverter}}">
+                            </Label>
+                            <!--/Type-->
+
                             <!--Name-->
 
                             <Entry x:Name="EntryName"
-                                   Grid.Row="1"
+                                   Grid.Row="3"
                                    Grid.Column="1"
                                    Placeholder="Nombre de Impuesto"
                                    Keyboard="Text"
@@ -129,13 +161,13 @@
                                     <local:CharactersValidatiorBehavior x:Name="nameValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="1" 
+                            <Image Grid.Row="3" 
                                    Grid.Column="2" 
                                    x:Name="nameSuccessErrorImage"
                                    Style="{Binding Source={x:Reference nameValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="2" 
+                            <Label Grid.Row="4" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference nameValidator}, 
                                    Path=IsValid, 
@@ -146,7 +178,7 @@
 
                             <!--Tax Rate Percentage-->
                             <Entry x:Name="EntryTaxRatePercentage"
-                                   Grid.Row="3"
+                                   Grid.Row="5"
                                    Grid.Column="1"
                                    Placeholder="Porcentaje de Impuesto"
                                    Keyboard="Numeric"
@@ -157,13 +189,13 @@
                                     <local:DecimalValidatorBehavior x:Name="taxRatePercentageValidator"/>
                                 </Entry.Behaviors>
                             </Entry>
-                            <Image Grid.Row="3" 
+                            <Image Grid.Row="5" 
                                    Grid.Column="2" 
                                    x:Name="taxRatePercentageSuccessErrorImage"
                                    Style="{Binding Source={x:Reference taxRatePercentageValidator}, 
                                    Path=IsValid, 
                                    Converter={StaticResource boolToStyleImage}}"/>
-                            <Label Grid.Row="4" 
+                            <Label Grid.Row="6" 
                                    Grid.Column="1" 
                                    Style="{Binding Source={x:Reference taxRatePercentageValidator}, 
                                    Path=IsValid, 
@@ -172,38 +204,38 @@
                             <!--/Tax Rate Percentage-->
 
                             <!--Tax Rate Variable-->
-                            <Label Grid.Row="5"
+                            <Label Grid.Row="7"
                                    Grid.Column="1"
                                    Text="Porcentaje variable por producto"
                                    FontSize="16"></Label>
-                            <Switch Grid.Row="5"
+                            <Switch Grid.Row="7"
                                     Grid.Column="1"
                                     IsToggled="{Binding TaxRateVariable}">
                             </Switch>
                             <!--/Tax Rate Variable-->
 
                             <!--Active-->
-                            <Label Grid.Row="6"
+                            <Label Grid.Row="8"
                                    Grid.Column="1"
                                    Text="Impuesto Activo"
                                    FontSize="16"></Label>
-                            <Switch Grid.Row="6"
+                            <Switch Grid.Row="8"
                                     Grid.Column="1"
                                     IsToggled="{Binding Active}">
                             </Switch>
                             <!--/Active-->
 
                             <!--Printed-->
-                            <Label Grid.Row="7"
+                            <Label Grid.Row="9"
                                    Grid.Column="1"
                                    Text="Imprime en Ticket"
                                    FontSize="16"></Label>
-                            <Switch Grid.Row="7"
+                            <Switch Grid.Row="9"
                                     Grid.Column="1"
                                     IsToggled="{Binding Printed}">
                             </Switch>
                             <!--/Active-->
-                            <Grid Grid.Row="8"
+                            <Grid Grid.Row="10"
                                   Grid.Column="1">
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto"></RowDefinition>
