@@ -1,4 +1,5 @@
-﻿using Mahzan.Mobile.API.Enums.Results;
+﻿using ImTools;
+using Mahzan.Mobile.API.Enums.Results;
 using Mahzan.Mobile.API.Filters.Tickets;
 using Mahzan.Mobile.API.Implementations._Base;
 using Mahzan.Mobile.API.Interfaces.Tickets;
@@ -24,6 +25,8 @@ namespace Mahzan.Mobile.API.Implementations.Tickets
         {
 
         }
+
+ 
 
         public async Task<GetTicketsResult> Get(GetTicketsFilter filter)
         {
@@ -95,6 +98,50 @@ namespace Mahzan.Mobile.API.Implementations.Tickets
                 var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
 
                 result = JsonConvert.DeserializeObject<GetTicketResult>(respuesta);
+            }
+            catch (Exception ex)
+            {
+                result.IsValid = false;
+                result.ResultTypeEnum = ResultTypeEnum.ERROR;
+                result.Message = ex.Message;
+            }
+
+            return result;
+        }
+
+        public async Task<GetTicketToPrintResult> GetTicketToPrint(Guid ticketsId)
+        {
+            GetTicketToPrintResult result = new GetTicketToPrintResult();
+
+            StringBuilder uri = new StringBuilder();
+            uri.Append(URL_API);
+            uri.Append("/v1/Tickets/" + ticketsId.ToString());
+            uri.Append("/get-ticket-to-print");
+
+            UriBuilder uriBuilder = new UriBuilder(uri.ToString());
+
+            try
+            {
+                var query = HttpUtility.ParseQueryString(uriBuilder.Query);
+
+                //if (filter.CreatedAt != null)
+                //{
+                //    query["CreatedAt"] = filter.CreatedAt.Value.Date.ToString();
+                //}
+
+
+                uriBuilder.Query = query.ToString();
+
+                HttpClient httpClient = new HttpClient();
+
+
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", TOKEN);
+
+                HttpResponseMessage httpResponseMessage = await httpClient.GetAsync(uriBuilder.ToString());
+
+                var respuesta = await httpResponseMessage.Content.ReadAsStringAsync();
+
+                result = JsonConvert.DeserializeObject<GetTicketToPrintResult>(respuesta);
             }
             catch (Exception ex)
             {

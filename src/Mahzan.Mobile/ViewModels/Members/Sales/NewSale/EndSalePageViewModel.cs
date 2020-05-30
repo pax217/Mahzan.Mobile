@@ -1,10 +1,9 @@
-﻿using Mahzan.Mobile.Models.Members.Sales.NewSale;
+﻿using Mahzan.Mobile.API.Interfaces.Tickets;
+using Mahzan.Mobile.API.Results.Tickets;
+using Mahzan.Mobile.Models.Members.Sales.NewSale;
 using Mahzan.Mobile.Services.Interfaces;
 using Mahzan.Mobile.SqLite.Entities;
 using Mahzan.Mobile.SqLite.Interfaces;
-using Mahzan.Mobile.Views;
-using Mahzan.Mobile.Views.Members.Sales;
-using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Navigation;
 using Prism.Services;
@@ -27,11 +26,12 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
         private ChargeTicketDetail ChargeTicketDetail = new ChargeTicketDetail();
 
-        private readonly IPrintTicketService _printTicketService;
+        private readonly ITicketsService _ticketsService; 
 
         private readonly IBlueToothService _blueToothService;
 
         private readonly IRepository<BluetoothDevice> _bluetoothDeviceRepository;
+
 
         private decimal _total { get; set; }
 
@@ -64,13 +64,10 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
         public EndSalePageViewModel(
             INavigationService navigationService,
             IPageDialogService pageDialogService,
-            IPrintTicketService printTicketService,
-            IRepository<BluetoothDevice> bluetoothDeviceRepository)
+            IRepository<BluetoothDevice> bluetoothDeviceRepository, 
+            ITicketsService ticketsService)
         {
-            //Services
-            _navigationService = navigationService;
-            _pageDialogService = pageDialogService;
-            _printTicketService = printTicketService;
+
 
             //Repository
             _bluetoothDeviceRepository = bluetoothDeviceRepository;
@@ -82,6 +79,11 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
             //BlueTooth
             _blueToothService = Xamarin.Forms.DependencyService.Get<IBlueToothService>();
+
+            //Services
+            _navigationService = navigationService;
+            _pageDialogService = pageDialogService;
+            _ticketsService = ticketsService;
         }
 
         private async Task OnPrintTicketCommand()
@@ -98,13 +100,25 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
                 return;
             }
 
-            StringBuilder ticket = await _printTicketService
-                                  .GetTicketToPrint(new Guid("B8742F54-79D0-4280-2F98-08D7E3BB9FC8"),
-                                                    ChargeTicketDetail.TicketsClosedId);
+            GetTicketToPrintResult result = await _ticketsService
+                .GetTicketToPrint(ChargeTicketDetail.TicketsClosedId);
 
-            await _blueToothService
-                  .Print(bluetoothDevice.FirstOrDefault().DeviceName,
-                         ticket.ToString());
+            if (result.IsValid)
+            {
+                await _blueToothService
+                      .Print(bluetoothDevice.FirstOrDefault().DeviceName,
+                             result.Ticket);
+            }
+            else 
+            {
+                await _pageDialogService
+                      .DisplayAlertAsync(
+                        result.Title,
+                        result.Message,
+                        "Ok");
+                return;
+            }
+
         }
 
         private void OnNewSaleCommand()
@@ -121,6 +135,8 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
         public void OnNavigatedTo(INavigationParameters parameters)
         {
             ChargeTicketDetail = parameters.GetValue<ChargeTicketDetail>("chargeTicketDetail");
+
+
 
             if (ChargeTicketDetail!=null)
             {

@@ -30,8 +30,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.Tickets
 
         private readonly IBlueToothService _blueToothService;
 
-        private readonly IPrintTicketService _printTicketService;
-
         private readonly IRepository<BluetoothDevice> _bluetoothDeviceRepository;
 
         private ObservableCollection<TicketDetail> _listViewTicketDetail { get; set; }
@@ -96,7 +94,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.Tickets
         {
             _navigationService = navigationService;
             _ticketsService = ticketsService;
-            _printTicketService = printTicketService;
             _pageDialogService = pageDialogService;
 
             //REpository
@@ -123,15 +120,26 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.Tickets
                 return;
             }
 
-            StringBuilder ticket = await _printTicketService
-                                         .GetTicketToPrint(new Guid("B8742F54-79D0-4280-2F98-08D7E3BB9FC8"),
-                                                    TicketsId);
+            GetTicketToPrintResult result = await _ticketsService
+                .GetTicketToPrint(TicketsId);
+
+            if (result.IsValid)
+            {
+                await _blueToothService
+                      .Print(bluetoothDevice.FirstOrDefault().DeviceName,
+                             result.Ticket.ToString());
+            }
+            else 
+            {
+                await _pageDialogService
+                        .DisplayAlertAsync(
+                            result.Title,
+                            result.Message,
+                            "Ok");
+            }
 
 
 
-            await _blueToothService
-                  .Print(bluetoothDevice.FirstOrDefault().DeviceName, 
-                         ticket.ToString());
 
         }
 

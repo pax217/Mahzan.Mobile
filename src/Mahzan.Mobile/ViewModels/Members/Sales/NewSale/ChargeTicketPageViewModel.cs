@@ -153,7 +153,6 @@ namespace Mahzan.Mobile.ViewModels.Members.Sales.NewSale
 
                 var navigationParams = new NavigationParameters();
                 navigationParams.Add("chargeTicketDetail", ChargeTicketDetail);
-                navigationParams.Add("closeTicketsId", ChargeTicketDetail);
                 await _navigationService.NavigateAsync("EndSalePage", navigationParams);
 
                 //await Application.Current.MainPage.Navigation.PushModalAsync(new NavigationPage(new EndSalePage()));

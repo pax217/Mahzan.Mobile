@@ -10,6 +10,8 @@ namespace Mahzan.Mobile.API.Interfaces.Tickets
 {
     public interface ITicketsService
     {
+        Task<GetTicketToPrintResult> GetTicketToPrint(Guid ticketsId);
+
         Task<PostTicketCalculationResult> TicketCalculation(PostTicketCalculationRequest postTicketCalculationRequest);
 
         Task<PostTicketCloseSaleResult> TicketCloseSale(PostTicketCalculationRequest postTicketCalculationRequest);
